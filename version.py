@@ -1,0 +1,2 @@
+APP_VERSION = "0.0.0"
+BUILD_NUMBER = "0"
