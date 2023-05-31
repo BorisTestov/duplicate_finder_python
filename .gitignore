@@ -1,4 +1,5 @@
 **/.coverage*
+!**/.coveragerc
 **/.idea/
 **/__pycache__/
 **/.pytest_cache
