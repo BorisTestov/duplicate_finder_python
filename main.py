@@ -1,9 +1,13 @@
-from version import APP_VERSION, BUILD_NUMBER
+# from version import APP_VERSION, BUILD_NUMBER
 
+import sys
 
-def main():
-    print(f"version {APP_VERSION} build {BUILD_NUMBER}")
+from PySide6.QtWidgets import QApplication
 
+from ui.gui import MainWindow
 
 if __name__ == "__main__":
-    main()
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    window.show()
+    sys.exit(app.exec())
