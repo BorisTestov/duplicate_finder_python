@@ -1,19 +1,14 @@
 import os
 import re
 from collections import defaultdict
-from enum import Enum
 from typing import Set, Union
 
 from PySide6.QtCore import QCryptographicHash, QThreadPool, QMutex, QMutexLocker
 from typeguard import typechecked
 
 from hashed_file import HashedFile
+from search_types import SearchTypes
 from worker import Worker
-
-
-class SearchTypes(Enum):
-    BY_NAME = 0
-    BY_HASH = 1
 
 
 class DuplicateFinder:
