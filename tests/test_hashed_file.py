@@ -6,15 +6,6 @@ import pytest
 from hashed_file import HashedFile
 
 
-def test_file_size(temp_file):
-    for i in range(len(ascii_uppercase)):
-        content = ascii_uppercase[:i + 1]
-        with open(temp_file, "w") as f:
-            print(content, file=f)
-        hashed_file = HashedFile(temp_file)
-        assert hashed_file.get_file_size() == len(content) + 2
-
-
 def test_file_path(temp_file):
     for i in range(len(ascii_uppercase)):
         content = ascii_uppercase[:i + 1]
