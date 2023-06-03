@@ -127,6 +127,7 @@ class DuplicateFinder(QObject):
         self.find_duplicate.emit(f1, f2)
 
     def __add_file(self, path: os.path, *args, **kwargs) -> None:
+        # TODO group files by size. So we don't need to compare files with different sizes each time
         def path_in_masks(p, masks):
             return any(bool(regex.match(os.path.basename(p))) for regex in masks)
 

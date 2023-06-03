@@ -21,6 +21,7 @@ for:
     before_build:
       - sudo apt-get update -qq
       - sudo apt-get install -y python3 python3-pip
+      - python3 -m pip install --upgrade pip
       - python3 -m pip install -r requirements.txt
 
     build_script:
