@@ -14,9 +14,7 @@ permissions:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python 3.10
@@ -41,3 +39,5 @@ jobs:
         with:
           artifacts: "dist/duplicate_finder"
           tag: "0.0.1"
+
+
