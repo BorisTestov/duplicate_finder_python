@@ -6,7 +6,7 @@ name: Windows Release
 on:
   push:
     tags:
-      - '*_linux_release'
+      - '*_windows_release'
 
 permissions:
   contents: read
