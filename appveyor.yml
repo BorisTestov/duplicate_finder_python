@@ -1,0 +1,14 @@
+image:
+  - Visual Studio 2019
+
+environment:
+  matrix:
+    - TOXENV: py311
+
+build: false
+
+install:
+  - py -m pip install tox
+
+test_script:
+  - py -m tox
