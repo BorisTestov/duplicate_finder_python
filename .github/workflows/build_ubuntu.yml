@@ -49,7 +49,7 @@ jobs:
           ls dist/
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: "dist/duplicate_finder"
-          tag: "0.0.0"
+          artifacts: "duplicate_finder"
+          tag: "0.0.3"
 
 
