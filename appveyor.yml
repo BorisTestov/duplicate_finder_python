@@ -1,14 +1,41 @@
-image:
-  - Visual Studio 2019
-
 environment:
+  PROJECT_NAME: duplicate_finder_python
+  MAJOR: 0
+  MINOR: 0
   matrix:
-    - TOXENV: py311
+    - job_name: Linux build
+      appveyor_build_worker_image: Ubuntu2004
 
-build: false
+version: ${MAJOR}.${MINOR}.{build}
 
-install:
-  - py -m pip install tox
+matrix:
+  fast_finish: true
 
-test_script:
-  - py -m tox
+skip_tags: true
+
+for:
+  - matrix:
+      only:
+        - job_name: Linux build
+
+    before_build:
+      - sudo apt-get update -qq
+      - sudo apt-get install -y python3 python3-pip
+      - python3 -m pip install -r requirements.txt
+
+    build_script:
+      - python3 -m pip install pyinstaller
+      - $HOME/.local/bin/pyinstaller duplicate_finder.spec
+
+    artifacts:
+      - path: dist/duplicate_finder
+        name: $PROJECT_NAME-$APPVEYOR_BUILD_VERSION-Linux
+
+    deploy:
+      - provider: GitHub
+        skip_cleanup: true
+        release: $APPVEYOR_BUILD_VERSION
+        auth_token: $GITHUB_TOKEN
+        artifact: $PROJECT_NAME-$APPVEYOR_BUILD_VERSION-Linux
+        draft: false
+        prerelease: false
