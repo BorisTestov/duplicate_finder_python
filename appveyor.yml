@@ -3,10 +3,10 @@ environment:
   MAJOR: 0
   MINOR: 0
   matrix:
-    - job_name: Linux build
-      appveyor_build_worker_image: Ubuntu2004
     - job_name: MS build
       appveyor_build_worker_image: Visual Studio 2019
+    - job_name: Linux build
+      appveyor_build_worker_image: Ubuntu2004
 
 version: ${MAJOR}.${MINOR}.{build}
 
