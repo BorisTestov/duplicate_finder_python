@@ -40,9 +40,7 @@ def test_find(search_type,
               include_masks,
               exclude_masks,
               min_file_size,
-              depth,
-              blocksize,
-              hash_method):
+              depth):
     dirs, files = temp_duplicates
     expected_files = sorted([{os.path.abspath(files[i]) for i in s} for s in expected_files])
     if exclude_directories is not None:
@@ -54,9 +52,7 @@ def test_find(search_type,
                              include_masks=include_masks,
                              exclude_masks=exclude_masks,
                              min_file_size=min_file_size,
-                             depth=depth,
-                             blocksize=blocksize,
-                             hash_method=hash_method)
+                             depth=depth)
     result = sorted([set(value).union({key}) for key, value in finder.find().items()])
     try:
         assert list_of_sets_are_equal(result, expected_files)
