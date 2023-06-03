@@ -15,6 +15,10 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
+    on:
+      push:
+        tags:
+          - '*'
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python 3.10
@@ -30,6 +34,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: test
+    on:
+      push:
+        tags:
+          - '*'
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python 3.10
@@ -50,6 +58,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
+    on:
+      push:
+        tags:
+          - '*'
     permissions:
       contents: write
     steps:
@@ -61,6 +73,5 @@ jobs:
       - uses: ncipollo/release-action@v1
         with:
           artifacts: "duplicate_finder"
-          tag: "0.0.1_linux"
 
 
