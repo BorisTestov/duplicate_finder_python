@@ -22,7 +22,7 @@ for:
 
     before_build:
       - python -m pip install --upgrade pip
-      - pip index versions PySide6
+      - pip3 index versions PySide6
       - python -m pip index versions PySide6
       - python -m pip install -r requirements.txt
 
