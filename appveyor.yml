@@ -22,8 +22,9 @@ for:
 
     before_build:
       - python -m pip install --upgrade pip
-      - ps: python -m pip index versions PySide6
-      - pip3 index versions PySide6
+      - python -m pip install wheel
+      - ps: Invoke-WebRequest -Uri "https://files.pythonhosted.org/packages/18/11/241dce340c7bbda01352cf23c00b9d07f6e6395208b0d2011a4ac9d2e1d0/PySide6-6.5.1-cp37-abi3-win_amd64.whl" -OutFile "pyside.whl"
+      - python -m pip install pyside.whl
       - python -m pip install -r requirements.txt
 
     build_script:
