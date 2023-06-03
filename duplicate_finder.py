@@ -131,6 +131,8 @@ class DuplicateFinder(QObject):
         # TODO can we speed up caching? Different algo?
         # TODO can we use cuda when possible?
         # TODO need to take a look at xxhash lib. looks promising.
+        # TODO fix linux build ImportError: libQt6Widgets.so.6: cannot open shared object file: No such file or directory
+        # [6714] Failed to execute script 'main' due to unhandled exception!
         def path_in_masks(p, masks):
             return any(bool(regex.match(os.path.basename(p))) for regex in masks)
 

@@ -37,6 +37,8 @@ jobs:
           python-version: "3.10"
       - name: Install dependencies
         run: |
+          sudo apt update
+          sudo apt install libegl1 libegl1-mesa -y
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
           python -m pip install pyinstaller
