@@ -43,6 +43,10 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: dist
+      - name: check files
+        run: |
+          ls -a
+          ls dist/
       - uses: ncipollo/release-action@v1
         with:
           artifacts: "dist/duplicate_finder"
