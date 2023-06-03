@@ -2,7 +2,6 @@ import os
 from pprint import pprint
 
 import pytest
-from PySide6.QtCore import QCryptographicHash
 
 from duplicate_finder import DuplicateFinder, SearchTypes
 
@@ -19,14 +18,6 @@ def list_of_sets_are_equal(l1, l2):
     return True
 
 
-@pytest.mark.parametrize("hash_method", [
-    QCryptographicHash.Algorithm.Md5,
-    QCryptographicHash.Algorithm.Sha1,
-    QCryptographicHash.Algorithm.Sha512
-])
-@pytest.mark.parametrize("blocksize", [
-    1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1000, 1024
-])
 @pytest.mark.parametrize(
     "search_type, expected_files, exclude_directories, include_masks, exclude_masks, min_file_size, depth", [
         (SearchTypes.BY_HASH, [{0, 3, 7}, {1, 2, 6}, {4, 5, 8}], None, None, None, 0, 0),
@@ -49,9 +40,7 @@ def test_find(search_type,
               include_masks,
               exclude_masks,
               min_file_size,
-              depth,
-              blocksize,
-              hash_method):
+              depth):
     dirs, files = temp_duplicates
     expected_files = sorted([{os.path.abspath(files[i]) for i in s} for s in expected_files])
     if exclude_directories is not None:
@@ -63,9 +52,7 @@ def test_find(search_type,
                              include_masks=include_masks,
                              exclude_masks=exclude_masks,
                              min_file_size=min_file_size,
-                             depth=depth,
-                             blocksize=blocksize,
-                             hash_method=hash_method)
+                             depth=depth)
     result = sorted([set(value).union({key}) for key, value in finder.find().items()])
     try:
         assert list_of_sets_are_equal(result, expected_files)

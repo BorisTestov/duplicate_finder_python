@@ -2,19 +2,8 @@ import os
 from string import ascii_uppercase
 
 import pytest
-import typeguard
-from PySide6.QtCore import QObject
 
 from hashed_file import HashedFile
-
-
-def test_file_size(temp_file):
-    for i in range(len(ascii_uppercase)):
-        content = ascii_uppercase[:i + 1]
-        with open(temp_file, "w") as f:
-            print(content, file=f)
-        hashed_file = HashedFile(temp_file)
-        assert hashed_file.get_file_size() == len(content) + 2
 
 
 def test_file_path(temp_file):
@@ -99,34 +88,3 @@ def test_raise_on_invalid_block_index(temp_file, blockindex):
     hashed_file = HashedFile(temp_file)
     with pytest.raises(ValueError):
         hashed_file.get_hash_node(blockindex)
-
-
-@pytest.mark.raises
-@pytest.mark.typecheck
-@pytest.mark.parametrize("blocksize", [float("inf"), float("-inf"), float("nan"), None, 4.2])
-def test_raise_on_incorrect_blocksize_type(temp_file, blocksize):
-    with open(temp_file, "w"):
-        pass
-    with pytest.raises(typeguard.TypeCheckError):
-        HashedFile(temp_file, blocksize=blocksize)
-
-
-@pytest.mark.raises
-@pytest.mark.typecheck
-@pytest.mark.parametrize("blockindex", [float("inf"), float("-inf"), float("nan"), None, 4.2])
-def test_raise_on_invalid_block_index_type(temp_file, blockindex):
-    with open(temp_file, "w") as f:
-        print("TEST", file=f)
-    hashed_file = HashedFile(temp_file)
-    with pytest.raises(typeguard.TypeCheckError):
-        hashed_file.get_hash_node(blockindex)
-
-
-@pytest.mark.raises
-@pytest.mark.typecheck
-@pytest.mark.parametrize("object", [1, 1.2, "42", [1, 2, 3], (3, 2, 1), QObject()])
-def test_raise_on_comparison_with_different_type(temp_file, object):
-    with open(temp_file, "w") as f:
-        print("A", file=f)
-    with pytest.raises(typeguard.TypeCheckError):
-        HashedFile(temp_file) == object

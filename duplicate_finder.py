@@ -4,7 +4,6 @@ from collections import defaultdict
 from typing import Set, Union
 
 from PySide6.QtCore import QCryptographicHash, QThreadPool, QMutex, QMutexLocker, QObject, Signal
-from typeguard import typechecked
 
 from hashed_file import HashedFile
 from search_types import SearchTypes
@@ -14,18 +13,18 @@ from worker import Worker
 class DuplicateFinder(QObject):
     directory_scanned = Signal()
     all_directories_added = Signal(int)
+    find_duplicate = Signal(str, str)
 
-    @typechecked
     def __init__(self,
                  search_type: SearchTypes = SearchTypes.BY_HASH,
                  hash_method: QCryptographicHash.Algorithm = QCryptographicHash.Algorithm.Md5,
                  depth: int = 0,
                  min_file_size: int = 0,
                  blocksize: int = 512,
-                 include_directories: Union[Set[os.path], None] = None,
-                 exclude_directories: Union[Set[os.path], None] = None,
-                 include_masks: Union[Set[str], None] = None,
-                 exclude_masks: Union[Set[str], None] = None):
+                 include_directories: Union[Set, None] = None,
+                 exclude_directories: Union[Set, None] = None,
+                 include_masks: Union[Set, None] = None,
+                 exclude_masks: Union[Set, None] = None):
         super(DuplicateFinder, self).__init__()
 
         if include_directories is None:
@@ -75,7 +74,7 @@ class DuplicateFinder(QObject):
         self.__thread_pool = QThreadPool()
         self.__mutex = QMutex()
 
-    def find(self) -> defaultdict[Set]:
+    def find(self, *args, **kwargs) -> defaultdict[Set]:
         self.all_directories_added.emit(len(self.include_directories))
         for dir in self.include_directories:
             self.__scan_directory(dir, self.depth)
@@ -113,17 +112,25 @@ class DuplicateFinder(QObject):
         locker = QMutexLocker(self.__mutex)
         if f2 in self.duplicates:
             self.duplicates[f2].add(f1)
+            self.find_duplicate.emit(f2, f1)
             return
         for key, value in self.duplicates.items():
             if f1 in value:
                 self.duplicates[key].add(f2)
+                self.find_duplicate.emit(key, f2)
                 return
             elif f2 in value:
                 self.duplicates[key].add(f1)
+                self.find_duplicate.emit(key, f1)
                 return
         self.duplicates[f1].add(f2)
+        self.find_duplicate.emit(f1, f2)
 
     def __add_file(self, path: os.path, *args, **kwargs) -> None:
+        # TODO group files by size. So we don't need to compare files with different sizes each time
+        # TODO can we speed up caching? Different algo?
+        # TODO can we use cuda when possible?
+        # TODO need to take a look at xxhash lib. looks promising.
         def path_in_masks(p, masks):
             return any(bool(regex.match(os.path.basename(p))) for regex in masks)
 
@@ -146,14 +153,18 @@ class DuplicateFinder(QObject):
         if depth < 0:
             return
         if (self.exclude_directories is None) or (path not in self.exclude_directories):
-            for p in os.scandir(path):
-                if os.path.exists(p):
-                    if os.path.isfile(p):
-                        worker = Worker(self.__add_file, path=p)
-                    else:
-                        worker = Worker(self.__scan_directory, path=p, depth=depth - 1)
-                    self.__thread_pool.start(worker)
-            self.__thread_pool.waitForDone()
+            try:
+                for p in os.scandir(path):
+                    if os.path.exists(p):
+                        if os.path.isfile(p):
+                            worker = Worker(self.__add_file, path=p)
+                        else:
+                            worker = Worker(self.__scan_directory, path=p, depth=depth - 1)
+                        self.__thread_pool.start(worker)
+
+                self.__thread_pool.waitForDone()
+            except PermissionError:
+                pass  # TODO add logging. probably to separate window
 
     def __already_in_duplicates(self, path: os.path) -> bool:
         if not self.duplicates:

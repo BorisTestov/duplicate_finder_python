@@ -1,7 +1,7 @@
 import os
 
 from PySide6 import QtCore
-from PySide6.QtCore import QCryptographicHash
+from PySide6.QtCore import QCryptographicHash, QThreadPool
 from PySide6.QtGui import QShortcut, QKeySequence
 from PySide6.QtWidgets import QMainWindow, QAbstractItemView, QTreeWidgetItem
 from send2trash import send2trash
@@ -11,6 +11,7 @@ from search_types import SearchTypes
 from ui.confirmation_dialog import ConfirmationDialog
 from ui.slots import Slots
 from ui.ui_mainwindow import Ui_MainWindow
+from worker import Worker
 
 
 class ProgressBarHelper:
@@ -37,6 +38,7 @@ class MainWindow(QMainWindow):
         self.__setup()
         self.__connect_slots()
         self.total_directories = 0
+        self.thread_pool = QThreadPool()
 
     def __setup(self):
         self.ui.progress_bar.setVisible(False)
@@ -123,21 +125,6 @@ class MainWindow(QMainWindow):
             return
         self.__dialog.exec()
 
-    def __update_results(self, results):
-        self.ui.duplicates_tree_widget.clear()
-
-        for key, value in results.items():
-            original_file = QTreeWidgetItem()
-            original_file.setText(0, key)
-            original_file.setCheckState(0, QtCore.Qt.CheckState.Checked)
-            for path in value:
-                duplicate_file = QTreeWidgetItem()
-                duplicate_file.setText(0, path)
-                duplicate_file.setCheckState(0, QtCore.Qt.CheckState.Checked)
-                original_file.addChild(duplicate_file)
-            self.ui.duplicates_tree_widget.addTopLevelItem(original_file)
-        self.ui.duplicates_tree_widget.expandAll()
-
     def __remove_files(self):
         files_to_remove = set()
         for parent_i in range(self.ui.duplicates_tree_widget.topLevelItemCount()):
@@ -150,6 +137,7 @@ class MainWindow(QMainWindow):
                     continue
                 files_to_remove.add(duplicate_file)
         self.ui.progress_bar.setFormat("Removing files: %p%")
+        self.ui.progress_bar.setValue(0)
         self.ui.progress_bar.setVisible(True)
         pbh = ProgressBarHelper()
         pbh.set_total_elements(len(files_to_remove))
@@ -171,6 +159,22 @@ class MainWindow(QMainWindow):
 
     def __update_bar_on_directory(self):
         self.ui.progress_bar.value()
+
+    def __add_to_tree(self, top, child):
+        child_item = QTreeWidgetItem()
+        child_item.setText(0, child)
+        child_item.setCheckState(0, QtCore.Qt.CheckState.Checked)
+        top_item = QTreeWidgetItem()
+        top_item.setText(0, top)
+        top_item.setCheckState(0, QtCore.Qt.CheckState.Checked)
+        for i in range(self.ui.duplicates_tree_widget.topLevelItemCount()):
+            t = self.ui.duplicates_tree_widget.topLevelItem(i)
+            if t.text(0) == top:
+                t.addChild(child_item)
+                return
+        top_item.addChild(child_item)
+        self.ui.duplicates_tree_widget.addTopLevelItem(top_item)
+        self.ui.duplicates_tree_widget.expandAll()
 
     def search(self):
         hash_mappings = {
@@ -208,8 +212,15 @@ class MainWindow(QMainWindow):
                                  exclude_directories, include_masks, exclude_masks)
         self.ui.progress_bar.setVisible(True)
         self.ui.progress_bar.setFormat("Searching duplicates: %p%")
+        self.ui.progress_bar.setValue(0)
         pbh = ProgressBarHelper()
         finder.all_directories_added.connect(lambda i: pbh.set_total_elements(i))
         finder.directory_scanned.connect(lambda: self.ui.progress_bar.setValue(pbh.step()))
-        self.ui.progress_bar.setFormat("Search complete")
-        self.__update_results(finder.find())
+        finder.find_duplicate.connect(lambda a, b: self.__add_to_tree(a, b))
+
+        self.ui.duplicates_tree_widget.clear()
+        # TODO emit signal on subdirectories. If we have one large dir - we must count all subdirs to progress bar
+        # TODO emit signal on finding duplicates. So result pages will be updated one by one
+        worker = Worker(finder.find)
+        worker.signals.finished.connect(lambda: self.ui.progress_bar.setFormat("Search complete"))
+        self.thread_pool.start(worker)
