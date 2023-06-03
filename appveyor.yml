@@ -6,7 +6,7 @@ environment:
     - job_name: Linux build
       appveyor_build_worker_image: Ubuntu2004
     - job_name: MS build
-      appveyor_build_worker_image: Visual Studio 2022
+      appveyor_build_worker_image: Visual Studio 2019
 
 version: ${MAJOR}.${MINOR}.{build}
 
@@ -16,6 +16,32 @@ matrix:
 skip_tags: true
 
 for:
+  - matrix:
+      only:
+        - job_name: MS build
+
+      before_build:
+        - python -m pip install --upgrade pip
+        - python -m pip install -r requirements.txt
+
+      build_script:
+        - python -m pip install pyinstaller
+        - $HOME/.local/bin/pyinstaller duplicate_finder.spec
+
+      artifacts:
+        - path: dist/duplicate_finder.exe
+          name: $PROJECT_NAME-$APPVEYOR_BUILD_VERSION-Windows
+
+      deploy:
+        - provider: GitHub
+          skip_cleanup: true
+          release: $APPVEYOR_BUILD_VERSION
+          auth_token: $GITHUB_TOKEN
+          artifact: $PROJECT_NAME-$APPVEYOR_BUILD_VERSION-Windows
+          draft: false
+          prerelease: false
+
+
   - matrix:
       only:
         - job_name: Linux build
@@ -44,27 +70,3 @@ for:
         prerelease: false
 
 
-  - matrix:
-      only:
-        - job_name: MS build
-
-    before_build:
-      - python -m pip install --upgrade pip
-      - python -m pip install -r requirements.txt
-
-    build_script:
-      - python -m pip install pyinstaller
-      - $HOME/.local/bin/pyinstaller duplicate_finder.spec
-
-    artifacts:
-      - path: dist/duplicate_finder.exe
-        name: $PROJECT_NAME-$APPVEYOR_BUILD_VERSION-Windows
-
-    deploy:
-      - provider: GitHub
-        skip_cleanup: true
-        release: $APPVEYOR_BUILD_VERSION
-        auth_token: $GITHUB_TOKEN
-        artifact: $PROJECT_NAME-$APPVEYOR_BUILD_VERSION-Windows
-        draft: false
-        prerelease: false
