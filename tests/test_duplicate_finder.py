@@ -2,7 +2,6 @@ import os
 from pprint import pprint
 
 import pytest
-from PySide6.QtCore import QCryptographicHash
 
 from duplicate_finder import DuplicateFinder, SearchTypes
 
@@ -19,14 +18,6 @@ def list_of_sets_are_equal(l1, l2):
     return True
 
 
-@pytest.mark.parametrize("hash_method", [
-    QCryptographicHash.Algorithm.Md5,
-    QCryptographicHash.Algorithm.Sha1,
-    QCryptographicHash.Algorithm.Sha512
-])
-@pytest.mark.parametrize("blocksize", [
-    1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1000, 1024
-])
 @pytest.mark.parametrize(
     "search_type, expected_files, exclude_directories, include_masks, exclude_masks, min_file_size, depth", [
         (SearchTypes.BY_HASH, [{0, 3, 7}, {1, 2, 6}, {4, 5, 8}], None, None, None, 0, 0),
