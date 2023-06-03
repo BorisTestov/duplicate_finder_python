@@ -5,6 +5,8 @@ environment:
   matrix:
     - job_name: Linux build
       appveyor_build_worker_image: Ubuntu2004
+    - job_name: MS build
+      appveyor_build_worker_image: Visual Studio 2022
 
 version: ${MAJOR}.${MINOR}.{build}
 
@@ -38,5 +40,31 @@ for:
         release: $APPVEYOR_BUILD_VERSION
         auth_token: $GITHUB_TOKEN
         artifact: $PROJECT_NAME-$APPVEYOR_BUILD_VERSION-Linux
+        draft: false
+        prerelease: false
+
+
+  - matrix:
+      only:
+        - job_name: MS build
+
+    before_build:
+      - python3 -m pip install --upgrade pip
+      - python3 -m pip install -r requirements.txt
+
+    build_script:
+      - python3 -m pip install pyinstaller
+      - $HOME/.local/bin/pyinstaller duplicate_finder.spec
+
+    artifacts:
+      - path: dist/duplicate_finder.exe
+        name: $PROJECT_NAME-$APPVEYOR_BUILD_VERSION-Windows
+
+    deploy:
+      - provider: GitHub
+        skip_cleanup: true
+        release: $APPVEYOR_BUILD_VERSION
+        auth_token: $GITHUB_TOKEN
+        artifact: $PROJECT_NAME-$APPVEYOR_BUILD_VERSION-Windows
         draft: false
         prerelease: false
