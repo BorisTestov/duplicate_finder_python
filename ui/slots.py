@@ -1,5 +1,7 @@
+from PySide6 import QtCore
 from PySide6.QtCore import Slot
-from PySide6.QtWidgets import QListWidget, QAbstractItemView, QTreeView, QListView, QFileDialog, QLineEdit
+from PySide6.QtWidgets import QListWidget, QAbstractItemView, QTreeView, QListView, QFileDialog, QLineEdit, \
+    QTreeWidgetItem, QTreeWidget
 
 
 class Slots:
@@ -38,3 +40,58 @@ class Slots:
             return
         lw.addItem(text)
         le.clear()
+
+    @staticmethod
+    @Slot()
+    def on_item_change(item: QTreeWidgetItem, on_click=False):
+
+        def get_children_states(parent: QTreeWidgetItem):
+            children_states = [parent.child(i).checkState(0) for i in range(parent.childCount())]
+            at_least_one_checked = any(state == QtCore.Qt.CheckState.Checked for state in children_states)
+            all_checked = all(state == QtCore.Qt.CheckState.Checked for state in children_states)
+            if all_checked:
+                return QtCore.Qt.CheckState.Checked
+            elif at_least_one_checked:
+                return QtCore.Qt.CheckState.PartiallyChecked
+            return QtCore.Qt.CheckState.Unchecked
+
+        try:
+            item.treeWidget().blockSignals(True)
+
+            if on_click:
+                if item.checkState(0) == QtCore.Qt.CheckState.Checked:
+                    item.setCheckState(0, QtCore.Qt.CheckState.Unchecked)
+                else:
+                    item.setCheckState(0, QtCore.Qt.CheckState.Checked)
+
+            parent = item.parent()
+            if parent:
+                children_states = get_children_states(parent)
+                if children_states == QtCore.Qt.CheckState.Checked:
+                    parent.setCheckState(0, QtCore.Qt.CheckState.Checked)
+                elif children_states == QtCore.Qt.CheckState.PartiallyChecked:
+                    parent.setCheckState(0, QtCore.Qt.CheckState.PartiallyChecked)
+                else:
+                    parent.setCheckState(0, QtCore.Qt.CheckState.Unchecked)
+
+            target_check = item.checkState(0)
+
+            for i in range(item.childCount()):
+                child = item.child(i)
+                child.setCheckState(0, target_check)
+        finally:
+            item.treeWidget().blockSignals(False)
+
+    @staticmethod
+    @Slot()
+    def invert_selection(tree: QTreeWidget):
+        target_check = QtCore.Qt.CheckState.Unchecked
+        for i in range(tree.topLevelItemCount()):
+            top = tree.topLevelItem(i)
+            if top.checkState(0) == QtCore.Qt.CheckState.Checked:
+                continue
+            target_check = QtCore.Qt.CheckState.Checked
+            break
+        for i in range(tree.topLevelItemCount()):
+            top = tree.topLevelItem(i)
+            top.setCheckState(0, target_check)

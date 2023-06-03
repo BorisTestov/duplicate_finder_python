@@ -3,7 +3,7 @@ import re
 from collections import defaultdict
 from typing import Set, Union
 
-from PySide6.QtCore import QCryptographicHash, QThreadPool, QMutex, QMutexLocker
+from PySide6.QtCore import QCryptographicHash, QThreadPool, QMutex, QMutexLocker, QObject, Signal
 from typeguard import typechecked
 
 from hashed_file import HashedFile
@@ -11,7 +11,10 @@ from search_types import SearchTypes
 from worker import Worker
 
 
-class DuplicateFinder:
+class DuplicateFinder(QObject):
+    directory_scanned = Signal()
+    all_directories_added = Signal(int)
+
     @typechecked
     def __init__(self,
                  search_type: SearchTypes = SearchTypes.BY_HASH,
@@ -23,6 +26,8 @@ class DuplicateFinder:
                  exclude_directories: Union[Set[os.path], None] = None,
                  include_masks: Union[Set[str], None] = None,
                  exclude_masks: Union[Set[str], None] = None):
+        super(DuplicateFinder, self).__init__()
+
         if include_directories is None:
             raise ValueError("You must set include directories to check")
         include_directories = set(dir for dir in include_directories if os.path.exists(dir) and os.path.isdir(dir))
@@ -63,6 +68,7 @@ class DuplicateFinder:
         self.min_file_size = min_file_size
         self.blocksize = blocksize
         self.include_directories = include_directories
+
         self.exclude_directories = exclude_directories
         self.files_to_scan = set()
         self.duplicates = defaultdict(set)
@@ -70,8 +76,10 @@ class DuplicateFinder:
         self.__mutex = QMutex()
 
     def find(self) -> defaultdict[Set]:
+        self.all_directories_added.emit(len(self.include_directories))
         for dir in self.include_directories:
             self.__scan_directory(dir, self.depth)
+            self.directory_scanned.emit()
         self.__find_duplicates()
         return self.duplicates
 
