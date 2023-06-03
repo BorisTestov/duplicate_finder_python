@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python 3.10
@@ -33,16 +33,16 @@ jobs:
           path: dist/
 
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     needs: build
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v3
       - uses: actions/checkout@v2
       - uses: actions/download-artifact@v2
         with:
           name: dist
+      - uses: actions/checkout@v3
       - uses: ncipollo/release-action@v1
         with:
           artifacts: "duplicate_finder"
