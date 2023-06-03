@@ -18,7 +18,7 @@ jobs:
     on:
       push:
         tags:
-          - '*'
+          - '*_linux_release'
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python 3.10
@@ -37,7 +37,7 @@ jobs:
     on:
       push:
         tags:
-          - '*'
+          - '*_linux_release'
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python 3.10
@@ -61,7 +61,7 @@ jobs:
     on:
       push:
         tags:
-          - '*'
+          - '*_linux_release'
     permissions:
       contents: write
     steps:
