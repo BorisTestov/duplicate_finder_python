@@ -20,26 +20,26 @@ for:
       only:
         - job_name: MS build
 
-      before_build:
-        - python -m pip install --upgrade pip
-        - python -m pip install -r requirements.txt
+    before_build:
+      - python -m pip install --upgrade pip
+      - python -m pip install -r requirements.txt
 
-      build_script:
-        - python -m pip install pyinstaller
-        - $HOME/.local/bin/pyinstaller duplicate_finder.spec
+    build_script:
+      - python -m pip install pyinstaller
+      - $HOME/.local/bin/pyinstaller duplicate_finder.spec
 
-      artifacts:
-        - path: dist/duplicate_finder.exe
-          name: $PROJECT_NAME-$APPVEYOR_BUILD_VERSION-Windows
+    artifacts:
+      - path: dist/duplicate_finder.exe
+        name: $PROJECT_NAME-$APPVEYOR_BUILD_VERSION-Windows
 
-      deploy:
-        - provider: GitHub
-          skip_cleanup: true
-          release: $APPVEYOR_BUILD_VERSION
-          auth_token: $GITHUB_TOKEN
-          artifact: $PROJECT_NAME-$APPVEYOR_BUILD_VERSION-Windows
-          draft: false
-          prerelease: false
+    deploy:
+      - provider: GitHub
+        skip_cleanup: true
+        release: $APPVEYOR_BUILD_VERSION
+        auth_token: $GITHUB_TOKEN
+        artifact: $PROJECT_NAME-$APPVEYOR_BUILD_VERSION-Windows
+        draft: false
+        prerelease: false
 
 
   - matrix:
