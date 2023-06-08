@@ -23,31 +23,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Fetch master branch
-        run: |
-          git fetch origin master:master
 
       - name: Set up Python 3.10
         uses: actions/setup-python@v3
         with:
           python-version: "3.10"
 
-      - name: Verify branch
-        id: verify_branch
-        run: |
-          TAG_COMMIT=$(git rev-list -n 1 ${{ github.ref }})
-          if ! git branch --contains $TAG_COMMIT | grep -q '^* master$'; then
-            echo "This tag did not originate from the master branch. Stopping the workflow."
-            exit 1
-          fi
-        shell: bash
       - name: Extract version from tag
         id: get_version
         run: |
           echo "::set-output name=VERSION::${GITHUB_REF#refs/tags/}"
+          
       - name: Extract version components
         id: extract_version
         run: |
@@ -56,6 +42,7 @@ jobs:
           echo "::set-output name=MINOR::${VERSION_PARTS[1]}"
           echo "::set-output name=PATCH::${VERSION_PARTS[2]}"
         shell: bash
+        
       - name: Update version
         env:
           MAJOR: ${{ steps.extract_version.outputs.MAJOR }}
@@ -64,6 +51,7 @@ jobs:
           BUILD_NUMBER: ${{ github.run_id }}
         run: |
           python update_version.py
+          
       - name: Install dependencies
         run: |
           if [ "$RUNNER_OS" == "Linux" ]; then
@@ -74,10 +62,13 @@ jobs:
           python -m pip install -r requirements.txt
           python -m pip install pyinstaller
         shell: bash
+        
       - name: Build
         run: |
           pyinstaller duplicate_finder.spec
-      - uses: actions/upload-artifact@v2
+      
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
         with:
           name: dist
           path: dist/
@@ -98,9 +89,11 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v3
+      
       - uses: actions/download-artifact@v2
         with:
           name: dist
+          
       - uses: ncipollo/release-action@v1
         with:
           artifacts: "${{ matrix.artifact }}"
