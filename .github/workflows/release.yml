@@ -29,10 +29,9 @@ jobs:
       - name: Verify branch
         id: verify_branch
         run: |
-          TAG_SHA=$(git rev-parse ${{ github.ref }})
-          BRANCHES=$(git branch --contains $TAG_SHA)
-          if [[ ! $BRANCHES =~ "master" ]]; then
-            echo "This is not from the master branch. Stopping the workflow."
+          TAG=${GITHUB_REF#refs/tags/}
+          if ! git tag --merged master | grep -q "^$TAG$"; then
+            echo "This tag did not originate from the master branch. Stopping the workflow."
             exit 1
           fi
         shell: bash
