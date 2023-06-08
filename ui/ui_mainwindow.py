@@ -11,22 +11,25 @@
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,
     QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QAbstractSpinBox, QApplication, QButtonGroup, QGridLayout,
-    QGroupBox, QHeaderView, QLabel, QLineEdit,
-    QListWidget, QListWidgetItem, QMainWindow, QProgressBar,
+from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
+    QCursor, QFont, QFontDatabase, QGradient,
+    QIcon, QImage, QKeySequence, QLinearGradient,
+    QPainter, QPalette, QPixmap, QRadialGradient,
+    QTransform)
+from PySide6.QtWidgets import (QAbstractSpinBox, QApplication, QButtonGroup, QComboBox,
+    QGridLayout, QGroupBox, QHBoxLayout, QHeaderView,
+    QLabel, QLineEdit, QListWidget, QListWidgetItem,
+    QMainWindow, QMenu, QMenuBar, QProgressBar,
     QPushButton, QRadioButton, QSizePolicy, QSpacerItem,
-    QSpinBox, QTabWidget, QTreeWidget, QTreeWidgetItem,
-    QVBoxLayout, QWidget)
+    QSpinBox, QStatusBar, QTabWidget, QTreeWidget,
+    QTreeWidgetItem, QVBoxLayout, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(600, 691)
+        MainWindow.setEnabled(True)
+        MainWindow.resize(872, 701)
         MainWindow.setStyleSheet(u"/*Copyright (c) DevSec Studio. All rights reserved.\n"
 "\n"
 "MIT License\n"
@@ -337,27 +340,6 @@ class Ui_MainWindow(object):
                         "}\n"
 "\n"
 "\n"
-"QComboBox::drop-down\n"
-"{\n"
-"    subcontrol-origin: padding;\n"
-"    subcontrol-position: top right;\n"
-"    width: 15px;\n"
-"    border-left-width: 1px;\n"
-"    border-left-color: darkgray;\n"
-"    border-left-style: solid; \n"
-"    border-top-right-radius: 3px; \n"
-"    border-bottom-right-radius: 3px;\n"
-"\n"
-"}\n"
-"\n"
-"\n"
-"QComboBox::down-arrow\n"
-"{\n"
-"    image: url(://arrow-down.png);\n"
-"    width: 8px;\n"
-"    height: 8px;\n"
-"}\n"
-"\n"
 "\n"
 "\n"
 "\n"
@@ -396,8 +378,7 @@ class Ui_MainWindow(object):
 "/*-----QTextEdit-----*/\n"
 "QTextEdit\n"
 "{\n"
-"	background-color: #808"
-                        "080;\n"
+"	background-color: #808080;\n"
 "	color: #fff;\n"
 "	border: 1px groove #333333;\n"
 "\n"
@@ -425,7 +406,8 @@ class Ui_MainWindow(object):
 "\n"
 "QGroupBox \n"
 "{\n"
-"	background-color: qlineargradient(spread:repeat, x1:0.486, y1:0, x2:0.505, y2:1, stop:0.00480769 rgba(170, 169, 169, 255),stop:1 rgba(122, 122, 122, 255));\n"
+"	background-color: qlineargradient(spread:repeat, x1:0.486, y1:0,"
+                        " x2:0.505, y2:1, stop:0.00480769 rgba(170, 169, 169, 255),stop:1 rgba(122, 122, 122, 255));\n"
 "	font-weight: bold;\n"
 "\n"
 "}\n"
@@ -446,8 +428,7 @@ class Ui_MainWindow(object):
 "QGroupBox::title::disabled\n"
 "{\n"
 "	background-color: #404040;\n"
-"	color: #656"
-                        "565;\n"
+"	color: #656565;\n"
 "    subcontrol-origin: margin;\n"
 "    subcontrol-position: top left;\n"
 "    padding: 5px;\n"
@@ -470,7 +451,8 @@ class Ui_MainWindow(object):
 "{\n"
 "    color: #b1b1b1;\n"
 "    background-color: #323232;\n"
-"    border: 2px solid #222222;\n"
+"    border: 2px solid #222222"
+                        ";\n"
 "    width: 12px;\n"
 "    height: 12px;\n"
 "\n"
@@ -509,8 +491,7 @@ class Ui_MainWindow(object):
 "\n"
 "\n"
 "/*-----QRadioButton-----*/\n"
-"QRadioButton{"
-                        "\n"
+"QRadioButton{\n"
 "	background-color: transparent;\n"
 "	font-weight: bold;\n"
 "	color: #fff;\n"
@@ -534,7 +515,8 @@ class Ui_MainWindow(object):
 "	border: 2px solid #00ff00; \n"
 "	border-radius: 5px; \n"
 "	background-color:  #323232;\n"
-"	width: 9px; \n"
+"	width: 9px;"
+                        " \n"
 "	height: 9px; \n"
 "\n"
 "}\n"
@@ -571,8 +553,7 @@ class Ui_MainWindow(object):
 "QTableView\n"
 "{\n"
 "    background-color: #808080;\n"
-"  "
-                        "  border: 1px groove #333333;\n"
+"    border: 1px groove #333333;\n"
 "    color: #f0f0f0;\n"
 "	font-weight: bold;\n"
 "    gridline-color: #333333;\n"
@@ -597,7 +578,8 @@ class Ui_MainWindow(object):
 "    background-color: #484c58;\n"
 "    color: #f0f0f0;\n"
 "\n"
-"}\n"
+"}"
+                        "\n"
 "\n"
 "\n"
 "QTableView::item:selected \n"
@@ -631,8 +613,7 @@ class Ui_MainWindow(object):
 "    color: #fff;\n"
 "	font-weight: bold;\n"
 "    text-align: left;\n"
-"	padding: "
-                        "4px;\n"
+"	padding: 4px;\n"
 "	\n"
 "}\n"
 "\n"
@@ -661,7 +642,8 @@ class Ui_MainWindow(object):
 "\n"
 "\n"
 "QHeaderView::section::vertical::first,\n"
-"QHeaderView::section::vertical::only-one\n"
+"QHeaderView::section::vertical::only-on"
+                        "e\n"
 "{\n"
 "    border-top: 0px;\n"
 "\n"
@@ -702,8 +684,7 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "\n"
-""
-                        "QTabBar::tab:disabled\n"
+"QTabBar::tab:disabled\n"
 "{\n"
 "	background-color: #656565;\n"
 "	color: #656565;\n"
@@ -732,7 +713,8 @@ class Ui_MainWindow(object):
 "\n"
 "QTabBar::tab:selected:disabled\n"
 "{\n"
-"	background-color: #404040;\n"
+"	"
+                        "background-color: #404040;\n"
 "	color: #656565;\n"
 "\n"
 "}\n"
@@ -772,8 +754,7 @@ class Ui_MainWindow(object):
 "    margin-right: -1px;\n"
 "    padding: 5px 10px 5px 10px;\n"
 "\n"
-""
-                        "}\n"
+"}\n"
 "\n"
 "\n"
 "QTabBar::tab:top:selected \n"
@@ -804,7 +785,8 @@ class Ui_MainWindow(object):
 "\n"
 "}\n"
 "\n"
-"\n"
+""
+                        "\n"
 "QTabBar::tab:right:!selected\n"
 "{\n"
 "    margin-left: 2px;\n"
@@ -838,8 +820,7 @@ class Ui_MainWindow(object):
 "QTabBar::tab:left:last, QTabBar::tab:right:last,\n"
 "QTabBar::tab:left:only-one, QTabBar::tab:right:only-one \n"
 "{\n"
-"    margin-bottom"
-                        ": 0;\n"
+"    margin-bottom: 0;\n"
 "\n"
 "}\n"
 "\n"
@@ -862,7 +843,8 @@ class Ui_MainWindow(object):
 "QSlider::sub-page:horizontal \n"
 "{\n"
 "	background-color: qlineargradient(spread:reflect, x1:1, y1:0, x2:1, y2:1, stop:0.00480769 rgba(201, 201, 201, 255),stop:1 rgba(72, 72, 72, 255));\n"
-"	border: 1px solid #000;\n"
+"	border: 1px solid #"
+                        "000;\n"
 "\n"
 "}\n"
 "\n"
@@ -893,8 +875,7 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "\n"
-"QSlider::sub-page:"
-                        "horizontal:disabled \n"
+"QSlider::sub-page:horizontal:disabled \n"
 "{\n"
 "	background-color: #bbb;\n"
 "	border-color: #999;\n"
@@ -923,7 +904,8 @@ class Ui_MainWindow(object):
 "	background-color: transparent;\n"
 "	width: 6px;\n"
 "\n"
-"}\n"
+""
+                        "}\n"
 "\n"
 "\n"
 "QSlider::sub-page:vertical \n"
@@ -945,8 +927,7 @@ class Ui_MainWindow(object):
 "QSlider::handle:vertical \n"
 "{\n"
 "	background-color: qlineargradient(spread:reflect, x1:0, y1:0.483, x2:1, y2:0.517, stop:0.00480769 rgba(201, 201, 201, 255),stop:1 rgba(72, 72, 72, 255));\n"
-""
-                        "	border: 1px solid #000;\n"
+"	border: 1px solid #000;\n"
 "	height: 12px;\n"
 "	margin-left: -6px;\n"
 "	margin-right: -6px;\n"
@@ -975,7 +956,8 @@ class Ui_MainWindow(object):
 "	border-color: #999;\n"
 "\n"
 "}\n"
-"\n"
+""
+                        "\n"
 "\n"
 "QSlider::handle:vertical:disabled \n"
 "{\n"
@@ -1014,8 +996,7 @@ class Ui_MainWindow(object):
 "\n"
 "QScrollBar::handle:horizontal\n"
 "{\n"
-""
-                        "    background-color: #a6acb3;\n"
+"    background-color: #a6acb3;\n"
 "	border: 1px solid #656565;\n"
 "	border-radius: 2px;\n"
 "    min-height: 20px;\n"
@@ -1037,7 +1018,8 @@ class Ui_MainWindow(object):
 "QScrollBar::sub-line:horizontal\n"
 "{\n"
 "    border: 1px solid #1b1b19;\n"
-"    background-color: #a6acb3;\n"
+"    ba"
+                        "ckground-color: #a6acb3;\n"
 "    width: 18px;\n"
 "    subcontrol-position: left;\n"
 "    subcontrol-origin: margin;\n"
@@ -1071,8 +1053,7 @@ class Ui_MainWindow(object):
 "\n"
 "\n"
 "QScrollBar:vertical\n"
-""
-                        "{\n"
+"{\n"
 "    background-color: #63676d;\n"
 "    width: 18px;\n"
 "    margin: 18px 0 18px 0;\n"
@@ -1095,7 +1076,8 @@ class Ui_MainWindow(object):
 "{\n"
 "    border: 1px solid #1b1b19;\n"
 "    background-color: #a6acb3;\n"
-"    height: 18px;\n"
+"    height"
+                        ": 18px;\n"
 "    subcontrol-position: bottom;\n"
 "    subcontrol-origin: margin;\n"
 "\n"
@@ -1126,8 +1108,7 @@ class Ui_MainWindow(object):
 "{\n"
 "    image: url(://arrow-down.png);\n"
 "    width: 8px;\n"
-"    height: "
-                        "8px;\n"
+"    height: 8px;\n"
 "\n"
 "}\n"
 "\n"
@@ -1143,7 +1124,7 @@ class Ui_MainWindow(object):
 "QProgressBar\n"
 "{\n"
 "	background-color: #000;\n"
-"	color: #00ff00;\n"
+"	color: #000;\n"
 "	font-weight: bold;\n"
 "	border: 0px groove #000;\n"
 "	border-radius: 10px;\n"
@@ -1155,7 +1136,8 @@ class Ui_MainWindow(object):
 "QProgressBar:disabled\n"
 "{\n"
 "	background-color: #404040;\n"
-"	color: #656565;\n"
+"	color:"
+                        " #656565;\n"
 "	border-color: #051a39;\n"
 "	border: 1px solid #000;\n"
 "	border-radius: 10px;\n"
@@ -1184,8 +1166,7 @@ class Ui_MainWindow(object):
 "/*-----QStatusBar-----*/\n"
 "QStatusBar\n"
 "{\n"
-"	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(102, 115, 1"
-                        "40, 255),stop:1 rgba(56, 63, 77, 255));\n"
+"	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(102, 115, 140, 255),stop:1 rgba(56, 63, 77, 255));\n"
 "	color: #ffffff;\n"
 "	border-color: #051a39;\n"
 "	font-weight: bold;\n"
@@ -1195,16 +1176,20 @@ class Ui_MainWindow(object):
 "\n"
 "")
         MainWindow.setTabShape(QTabWidget.Rounded)
+        self.Russian = QAction(MainWindow)
+        self.Russian.setObjectName(u"Russian")
+        self.English = QAction(MainWindow)
+        self.English.setObjectName(u"English")
+        self.dark = QAction(MainWindow)
+        self.dark.setObjectName(u"dark")
+        self.light = QAction(MainWindow)
+        self.light.setObjectName(u"light")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.gridLayout = QGridLayout(self.centralwidget)
         self.gridLayout.setObjectName(u"gridLayout")
-        self.gridLayout_12 = QGridLayout()
-        self.gridLayout_12.setObjectName(u"gridLayout_12")
-        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.gridLayout_12.addItem(self.horizontalSpacer, 1, 0, 1, 1)
-
+        self.search_runner_layout = QGridLayout()
+        self.search_runner_layout.setObjectName(u"search_runner_layout")
         self.search_button = QPushButton(self.centralwidget)
         self.search_button.setObjectName(u"search_button")
         self.search_button.setMinimumSize(QSize(200, 56))
@@ -1258,11 +1243,11 @@ class Ui_MainWindow(object):
 "}\n"
 "")
 
-        self.gridLayout_12.addWidget(self.search_button, 1, 1, 1, 1)
+        self.search_runner_layout.addWidget(self.search_button, 1, 1, 1, 1)
 
-        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.right_spacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.gridLayout_12.addItem(self.horizontalSpacer_2, 1, 2, 1, 1)
+        self.search_runner_layout.addItem(self.right_spacer, 1, 2, 1, 1)
 
         self.progress_bar = QProgressBar(self.centralwidget)
         self.progress_bar.setObjectName(u"progress_bar")
@@ -1281,10 +1266,14 @@ class Ui_MainWindow(object):
         self.progress_bar.setValue(100)
         self.progress_bar.setTextVisible(True)
 
-        self.gridLayout_12.addWidget(self.progress_bar, 0, 0, 1, 3)
+        self.search_runner_layout.addWidget(self.progress_bar, 0, 0, 1, 3)
+
+        self.left_spacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.search_runner_layout.addItem(self.left_spacer, 1, 0, 1, 1)
 
 
-        self.gridLayout.addLayout(self.gridLayout_12, 1, 0, 1, 1)
+        self.gridLayout.addLayout(self.search_runner_layout, 1, 0, 1, 1)
 
         self.tabs = QTabWidget(self.centralwidget)
         self.tabs.setObjectName(u"tabs")
@@ -1302,27 +1291,8 @@ class Ui_MainWindow(object):
         self.tabs.setTabBarAutoHide(False)
         self.directories = QWidget()
         self.directories.setObjectName(u"directories")
-        self.gridLayout_4 = QGridLayout(self.directories)
-        self.gridLayout_4.setObjectName(u"gridLayout_4")
-        self.exclude_directories_group_box = QGroupBox(self.directories)
-        self.exclude_directories_group_box.setObjectName(u"exclude_directories_group_box")
-        self.exclude_directories_group_box.setMinimumSize(QSize(276, 500))
-        self.exclude_directories_group_box.setMaximumSize(QSize(16777215, 16777215))
-        self.verticalLayout_3 = QVBoxLayout(self.exclude_directories_group_box)
-        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.exclude_directories_list_widget = QListWidget(self.exclude_directories_group_box)
-        self.exclude_directories_list_widget.setObjectName(u"exclude_directories_list_widget")
-
-        self.verticalLayout_3.addWidget(self.exclude_directories_list_widget)
-
-        self.choose_exclude_directories = QPushButton(self.exclude_directories_group_box)
-        self.choose_exclude_directories.setObjectName(u"choose_exclude_directories")
-
-        self.verticalLayout_3.addWidget(self.choose_exclude_directories)
-
-
-        self.gridLayout_4.addWidget(self.exclude_directories_group_box, 0, 1, 1, 1)
-
+        self.gridLayout_3 = QGridLayout(self.directories)
+        self.gridLayout_3.setObjectName(u"gridLayout_3")
         self.include_directories_group_box = QGroupBox(self.directories)
         self.include_directories_group_box.setObjectName(u"include_directories_group_box")
         sizePolicy1 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Ignored)
@@ -1345,18 +1315,153 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.addWidget(self.choose_include_directories)
 
 
-        self.gridLayout_4.addWidget(self.include_directories_group_box, 0, 0, 1, 1)
+        self.gridLayout_3.addWidget(self.include_directories_group_box, 0, 0, 1, 1)
 
-        self.tabs.addTab(self.directories, "")
-        self.advanced = QWidget()
-        self.advanced.setObjectName(u"advanced")
-        self.gridLayout_6 = QGridLayout(self.advanced)
-        self.gridLayout_6.setObjectName(u"gridLayout_6")
-        self.include_masks_group_box = QGroupBox(self.advanced)
-        self.include_masks_group_box.setObjectName(u"include_masks_group_box")
+        self.exclude_directories_group_box = QGroupBox(self.directories)
+        self.exclude_directories_group_box.setObjectName(u"exclude_directories_group_box")
+        self.exclude_directories_group_box.setMinimumSize(QSize(276, 500))
+        self.exclude_directories_group_box.setMaximumSize(QSize(16777215, 16777215))
+        self.verticalLayout = QVBoxLayout(self.exclude_directories_group_box)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.exclude_directories_list_widget = QListWidget(self.exclude_directories_group_box)
+        self.exclude_directories_list_widget.setObjectName(u"exclude_directories_list_widget")
+
+        self.verticalLayout.addWidget(self.exclude_directories_list_widget)
+
+        self.choose_exclude_directories = QPushButton(self.exclude_directories_group_box)
+        self.choose_exclude_directories.setObjectName(u"choose_exclude_directories")
+
+        self.verticalLayout.addWidget(self.choose_exclude_directories)
+
+
+        self.gridLayout_3.addWidget(self.exclude_directories_group_box, 0, 1, 1, 1)
+
+        self.search_parameters_layput = QVBoxLayout()
+        self.search_parameters_layput.setObjectName(u"search_parameters_layput")
+        self.search_type_group_box = QGroupBox(self.directories)
+        self.search_type_group_box.setObjectName(u"search_type_group_box")
         sizePolicy2 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy2.setHorizontalStretch(0)
         sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.search_type_group_box.sizePolicy().hasHeightForWidth())
+        self.search_type_group_box.setSizePolicy(sizePolicy2)
+        self.search_type_group_box.setMinimumSize(QSize(130, 100))
+        self.search_type_group_box.setMaximumSize(QSize(130, 200))
+        self.verticalLayout_3 = QVBoxLayout(self.search_type_group_box)
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.hash = QRadioButton(self.search_type_group_box)
+        self.search_type_button_group = QButtonGroup(MainWindow)
+        self.search_type_button_group.setObjectName(u"search_type_button_group")
+        self.search_type_button_group.addButton(self.hash)
+        self.hash.setObjectName(u"hash")
+        self.hash.setChecked(True)
+
+        self.verticalLayout_3.addWidget(self.hash)
+
+        self.name = QRadioButton(self.search_type_group_box)
+        self.search_type_button_group.addButton(self.name)
+        self.name.setObjectName(u"name")
+
+        self.verticalLayout_3.addWidget(self.name)
+
+
+        self.search_parameters_layput.addWidget(self.search_type_group_box)
+
+        self.parameters_group_box = QGroupBox(self.directories)
+        self.parameters_group_box.setObjectName(u"parameters_group_box")
+        sizePolicy2.setHeightForWidth(self.parameters_group_box.sizePolicy().hasHeightForWidth())
+        self.parameters_group_box.setSizePolicy(sizePolicy2)
+        self.parameters_group_box.setMinimumSize(QSize(130, 100))
+        self.parameters_group_box.setMaximumSize(QSize(130, 200))
+        self.verticalLayout_4 = QVBoxLayout(self.parameters_group_box)
+        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.min_file_size_label = QLabel(self.parameters_group_box)
+        self.min_file_size_label.setObjectName(u"min_file_size_label")
+        self.min_file_size_label.setMaximumSize(QSize(16777215, 33))
+
+        self.verticalLayout_4.addWidget(self.min_file_size_label)
+
+        self.horizontalLayout = QHBoxLayout()
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.min_file_size_spin_box = QSpinBox(self.parameters_group_box)
+        self.min_file_size_spin_box.setObjectName(u"min_file_size_spin_box")
+        self.min_file_size_spin_box.setStyleSheet(u"")
+        self.min_file_size_spin_box.setButtonSymbols(QAbstractSpinBox.UpDownArrows)
+        self.min_file_size_spin_box.setAccelerated(True)
+        self.min_file_size_spin_box.setMinimum(0)
+        self.min_file_size_spin_box.setMaximum(99999)
+        self.min_file_size_spin_box.setSingleStep(1)
+        self.min_file_size_spin_box.setValue(0)
+
+        self.horizontalLayout.addWidget(self.min_file_size_spin_box)
+
+        self.size_suffix_box = QComboBox(self.parameters_group_box)
+        self.size_suffix_box.addItem("")
+        self.size_suffix_box.addItem("")
+        self.size_suffix_box.addItem("")
+        self.size_suffix_box.addItem("")
+        self.size_suffix_box.setObjectName(u"size_suffix_box")
+
+        self.horizontalLayout.addWidget(self.size_suffix_box)
+
+
+        self.verticalLayout_4.addLayout(self.horizontalLayout)
+
+        self.depth_label = QLabel(self.parameters_group_box)
+        self.depth_label.setObjectName(u"depth_label")
+        self.depth_label.setMaximumSize(QSize(16777215, 33))
+
+        self.verticalLayout_4.addWidget(self.depth_label)
+
+        self.depth_spin_box = QSpinBox(self.parameters_group_box)
+        self.depth_spin_box.setObjectName(u"depth_spin_box")
+        self.depth_spin_box.setStyleSheet(u"")
+        self.depth_spin_box.setButtonSymbols(QAbstractSpinBox.UpDownArrows)
+        self.depth_spin_box.setAccelerated(True)
+        self.depth_spin_box.setMinimum(0)
+        self.depth_spin_box.setMaximum(10000000)
+        self.depth_spin_box.setSingleStep(1)
+        self.depth_spin_box.setValue(0)
+
+        self.verticalLayout_4.addWidget(self.depth_spin_box)
+
+
+        self.search_parameters_layput.addWidget(self.parameters_group_box)
+
+
+        self.gridLayout_3.addLayout(self.search_parameters_layput, 0, 4, 1, 2)
+
+        self.tabs.addTab(self.directories, "")
+        self.masks = QWidget()
+        self.masks.setObjectName(u"masks")
+        self.gridLayout_6 = QGridLayout(self.masks)
+        self.gridLayout_6.setObjectName(u"gridLayout_6")
+        self.exclude_masks_group_box = QGroupBox(self.masks)
+        self.exclude_masks_group_box.setObjectName(u"exclude_masks_group_box")
+        self.gridLayout_8 = QGridLayout(self.exclude_masks_group_box)
+        self.gridLayout_8.setObjectName(u"gridLayout_8")
+        self.exclude_mask_line_edit = QLineEdit(self.exclude_masks_group_box)
+        self.exclude_mask_line_edit.setObjectName(u"exclude_mask_line_edit")
+        self.exclude_mask_line_edit.setAutoFillBackground(False)
+        self.exclude_mask_line_edit.setClearButtonEnabled(True)
+
+        self.gridLayout_8.addWidget(self.exclude_mask_line_edit, 1, 1, 1, 1)
+
+        self.add_exclude_mask_button = QPushButton(self.exclude_masks_group_box)
+        self.add_exclude_mask_button.setObjectName(u"add_exclude_mask_button")
+
+        self.gridLayout_8.addWidget(self.add_exclude_mask_button, 2, 1, 1, 1)
+
+        self.exclude_masks_list_widget = QListWidget(self.exclude_masks_group_box)
+        self.exclude_masks_list_widget.setObjectName(u"exclude_masks_list_widget")
+
+        self.gridLayout_8.addWidget(self.exclude_masks_list_widget, 0, 1, 1, 1)
+
+
+        self.gridLayout_6.addWidget(self.exclude_masks_group_box, 0, 1, 2, 1)
+
+        self.include_masks_group_box = QGroupBox(self.masks)
+        self.include_masks_group_box.setObjectName(u"include_masks_group_box")
         sizePolicy2.setHeightForWidth(self.include_masks_group_box.sizePolicy().hasHeightForWidth())
         self.include_masks_group_box.setSizePolicy(sizePolicy2)
         self.gridLayout_9 = QGridLayout(self.include_masks_group_box)
@@ -1379,163 +1484,16 @@ class Ui_MainWindow(object):
         self.gridLayout_9.addWidget(self.include_masks_list_widget, 0, 1, 1, 1)
 
 
-        self.gridLayout_6.addWidget(self.include_masks_group_box, 0, 0, 3, 1)
+        self.gridLayout_6.addWidget(self.include_masks_group_box, 0, 0, 2, 1)
 
-        self.hashing_algorithm_group_box = QGroupBox(self.advanced)
-        self.hashing_algorithm_group_box.setObjectName(u"hashing_algorithm_group_box")
-        sizePolicy2.setHeightForWidth(self.hashing_algorithm_group_box.sizePolicy().hasHeightForWidth())
-        self.hashing_algorithm_group_box.setSizePolicy(sizePolicy2)
-        self.hashing_algorithm_group_box.setMinimumSize(QSize(130, 100))
-        self.hashing_algorithm_group_box.setMaximumSize(QSize(130, 200))
-        self.gridLayout_10 = QGridLayout(self.hashing_algorithm_group_box)
-        self.gridLayout_10.setObjectName(u"gridLayout_10")
-        self.sha1_radio_button = QRadioButton(self.hashing_algorithm_group_box)
-        self.hashing_button_group = QButtonGroup(MainWindow)
-        self.hashing_button_group.setObjectName(u"hashing_button_group")
-        self.hashing_button_group.addButton(self.sha1_radio_button)
-        self.sha1_radio_button.setObjectName(u"sha1_radio_button")
-
-        self.gridLayout_10.addWidget(self.sha1_radio_button, 1, 0, 1, 1)
-
-        self.md5_radio_button = QRadioButton(self.hashing_algorithm_group_box)
-        self.hashing_button_group.addButton(self.md5_radio_button)
-        self.md5_radio_button.setObjectName(u"md5_radio_button")
-        self.md5_radio_button.setChecked(True)
-
-        self.gridLayout_10.addWidget(self.md5_radio_button, 0, 0, 1, 1)
-
-        self.sha512_radio_button = QRadioButton(self.hashing_algorithm_group_box)
-        self.hashing_button_group.addButton(self.sha512_radio_button)
-        self.sha512_radio_button.setObjectName(u"sha512_radio_button")
-
-        self.gridLayout_10.addWidget(self.sha512_radio_button, 2, 0, 1, 1)
-
-
-        self.gridLayout_6.addWidget(self.hashing_algorithm_group_box, 1, 2, 1, 1)
-
-        self.exclude_masks_group_box = QGroupBox(self.advanced)
-        self.exclude_masks_group_box.setObjectName(u"exclude_masks_group_box")
-        self.gridLayout_8 = QGridLayout(self.exclude_masks_group_box)
-        self.gridLayout_8.setObjectName(u"gridLayout_8")
-        self.exclude_mask_line_edit = QLineEdit(self.exclude_masks_group_box)
-        self.exclude_mask_line_edit.setObjectName(u"exclude_mask_line_edit")
-        self.exclude_mask_line_edit.setAutoFillBackground(False)
-        self.exclude_mask_line_edit.setClearButtonEnabled(True)
-
-        self.gridLayout_8.addWidget(self.exclude_mask_line_edit, 1, 1, 1, 1)
-
-        self.add_exclude_mask_button = QPushButton(self.exclude_masks_group_box)
-        self.add_exclude_mask_button.setObjectName(u"add_exclude_mask_button")
-
-        self.gridLayout_8.addWidget(self.add_exclude_mask_button, 2, 1, 1, 1)
-
-        self.exclude_masks_list_widget = QListWidget(self.exclude_masks_group_box)
-        self.exclude_masks_list_widget.setObjectName(u"exclude_masks_list_widget")
-
-        self.gridLayout_8.addWidget(self.exclude_masks_list_widget, 0, 1, 1, 1)
-
-
-        self.gridLayout_6.addWidget(self.exclude_masks_group_box, 0, 1, 3, 1)
-
-        self.search_type_group_box = QGroupBox(self.advanced)
-        self.search_type_group_box.setObjectName(u"search_type_group_box")
-        sizePolicy2.setHeightForWidth(self.search_type_group_box.sizePolicy().hasHeightForWidth())
-        self.search_type_group_box.setSizePolicy(sizePolicy2)
-        self.search_type_group_box.setMinimumSize(QSize(130, 100))
-        self.search_type_group_box.setMaximumSize(QSize(130, 200))
-        self.gridLayout_11 = QGridLayout(self.search_type_group_box)
-        self.gridLayout_11.setObjectName(u"gridLayout_11")
-        self.hash_type = QRadioButton(self.search_type_group_box)
-        self.search_type_button_group = QButtonGroup(MainWindow)
-        self.search_type_button_group.setObjectName(u"search_type_button_group")
-        self.search_type_button_group.addButton(self.hash_type)
-        self.hash_type.setObjectName(u"hash_type")
-        self.hash_type.setChecked(True)
-
-        self.gridLayout_11.addWidget(self.hash_type, 0, 0, 1, 1)
-
-        self.name_type = QRadioButton(self.search_type_group_box)
-        self.search_type_button_group.addButton(self.name_type)
-        self.name_type.setObjectName(u"name_type")
-
-        self.gridLayout_11.addWidget(self.name_type, 1, 0, 1, 1)
-
-
-        self.gridLayout_6.addWidget(self.search_type_group_box, 0, 2, 1, 1)
-
-        self.parameters_group_box = QGroupBox(self.advanced)
-        self.parameters_group_box.setObjectName(u"parameters_group_box")
-        sizePolicy2.setHeightForWidth(self.parameters_group_box.sizePolicy().hasHeightForWidth())
-        self.parameters_group_box.setSizePolicy(sizePolicy2)
-        self.parameters_group_box.setMinimumSize(QSize(130, 100))
-        self.parameters_group_box.setMaximumSize(QSize(130, 200))
-        self.gridLayout_2 = QGridLayout(self.parameters_group_box)
-        self.gridLayout_2.setObjectName(u"gridLayout_2")
-        self.min_file_size_label = QLabel(self.parameters_group_box)
-        self.min_file_size_label.setObjectName(u"min_file_size_label")
-        self.min_file_size_label.setMaximumSize(QSize(16777215, 33))
-
-        self.gridLayout_2.addWidget(self.min_file_size_label, 2, 0, 1, 1)
-
-        self.block_size_spin_box = QSpinBox(self.parameters_group_box)
-        self.block_size_spin_box.setObjectName(u"block_size_spin_box")
-        self.block_size_spin_box.setStyleSheet(u"")
-        self.block_size_spin_box.setButtonSymbols(QAbstractSpinBox.UpDownArrows)
-        self.block_size_spin_box.setAccelerated(True)
-        self.block_size_spin_box.setMinimum(1)
-        self.block_size_spin_box.setMaximum(10000000)
-        self.block_size_spin_box.setSingleStep(1)
-        self.block_size_spin_box.setValue(512)
-
-        self.gridLayout_2.addWidget(self.block_size_spin_box, 5, 0, 1, 1)
-
-        self.depth_label = QLabel(self.parameters_group_box)
-        self.depth_label.setObjectName(u"depth_label")
-        self.depth_label.setMaximumSize(QSize(16777215, 33))
-
-        self.gridLayout_2.addWidget(self.depth_label, 6, 0, 1, 1)
-
-        self.block_size_label = QLabel(self.parameters_group_box)
-        self.block_size_label.setObjectName(u"block_size_label")
-        self.block_size_label.setMaximumSize(QSize(16777215, 33))
-
-        self.gridLayout_2.addWidget(self.block_size_label, 4, 0, 1, 1)
-
-        self.min_file_size_spin_box = QSpinBox(self.parameters_group_box)
-        self.min_file_size_spin_box.setObjectName(u"min_file_size_spin_box")
-        self.min_file_size_spin_box.setStyleSheet(u"")
-        self.min_file_size_spin_box.setButtonSymbols(QAbstractSpinBox.UpDownArrows)
-        self.min_file_size_spin_box.setAccelerated(True)
-        self.min_file_size_spin_box.setMinimum(0)
-        self.min_file_size_spin_box.setMaximum(10000000)
-        self.min_file_size_spin_box.setSingleStep(1)
-        self.min_file_size_spin_box.setValue(0)
-
-        self.gridLayout_2.addWidget(self.min_file_size_spin_box, 3, 0, 1, 1)
-
-        self.depth_spin_box = QSpinBox(self.parameters_group_box)
-        self.depth_spin_box.setObjectName(u"depth_spin_box")
-        self.depth_spin_box.setStyleSheet(u"")
-        self.depth_spin_box.setButtonSymbols(QAbstractSpinBox.UpDownArrows)
-        self.depth_spin_box.setAccelerated(True)
-        self.depth_spin_box.setMinimum(0)
-        self.depth_spin_box.setMaximum(10000000)
-        self.depth_spin_box.setSingleStep(1)
-        self.depth_spin_box.setValue(0)
-
-        self.gridLayout_2.addWidget(self.depth_spin_box, 7, 0, 1, 1)
-
-
-        self.gridLayout_6.addWidget(self.parameters_group_box, 2, 2, 1, 1)
-
-        self.tabs.addTab(self.advanced, "")
+        self.tabs.addTab(self.masks, "")
         self.results = QWidget()
         self.results.setObjectName(u"results")
         self.gridLayout_7 = QGridLayout(self.results)
         self.gridLayout_7.setObjectName(u"gridLayout_7")
-        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.left_spacer_2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.gridLayout_7.addItem(self.horizontalSpacer_3, 1, 0, 1, 1)
+        self.gridLayout_7.addItem(self.left_spacer_2, 1, 0, 1, 1)
 
         self.remove_selected_duplicates_button = QPushButton(self.results)
         self.remove_selected_duplicates_button.setObjectName(u"remove_selected_duplicates_button")
@@ -1543,9 +1501,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_7.addWidget(self.remove_selected_duplicates_button, 1, 1, 1, 1)
 
-        self.horizontalSpacer_4 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.right_spacer_2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.gridLayout_7.addItem(self.horizontalSpacer_4, 1, 2, 1, 1)
+        self.gridLayout_7.addItem(self.right_spacer_2, 1, 2, 1, 1)
 
         self.duplicates_tree_widget = QTreeWidget(self.results)
         self.duplicates_tree_widget.setObjectName(u"duplicates_tree_widget")
@@ -1558,6 +1516,27 @@ class Ui_MainWindow(object):
         self.gridLayout.addWidget(self.tabs, 0, 0, 1, 1)
 
         MainWindow.setCentralWidget(self.centralwidget)
+        self.menuBar = QMenuBar(MainWindow)
+        self.menuBar.setObjectName(u"menuBar")
+        self.menuBar.setGeometry(QRect(0, 0, 872, 22))
+        self.menuSettings = QMenu(self.menuBar)
+        self.menuSettings.setObjectName(u"menuSettings")
+        self.menuLanguage = QMenu(self.menuSettings)
+        self.menuLanguage.setObjectName(u"menuLanguage")
+        self.menuTheme = QMenu(self.menuSettings)
+        self.menuTheme.setObjectName(u"menuTheme")
+        MainWindow.setMenuBar(self.menuBar)
+        self.statusBar = QStatusBar(MainWindow)
+        self.statusBar.setObjectName(u"statusBar")
+        MainWindow.setStatusBar(self.statusBar)
+
+        self.menuBar.addAction(self.menuSettings.menuAction())
+        self.menuSettings.addAction(self.menuTheme.menuAction())
+        self.menuSettings.addAction(self.menuLanguage.menuAction())
+        self.menuLanguage.addAction(self.Russian)
+        self.menuLanguage.addAction(self.English)
+        self.menuTheme.addAction(self.dark)
+        self.menuTheme.addAction(self.light)
 
         self.retranslateUi(MainWindow)
 
@@ -1569,37 +1548,43 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
+        self.Russian.setText(QCoreApplication.translate("MainWindow", u"TBA", None))
+        self.English.setText(QCoreApplication.translate("MainWindow", u"TBA", None))
+        self.dark.setText(QCoreApplication.translate("MainWindow", u"TBA", None))
+        self.light.setText(QCoreApplication.translate("MainWindow", u"TBA", None))
         self.search_button.setText(QCoreApplication.translate("MainWindow", u"SEARCH", None))
         self.progress_bar.setFormat(QCoreApplication.translate("MainWindow", u"Adding Files: %p%", None))
-        self.exclude_directories_group_box.setTitle(QCoreApplication.translate("MainWindow", u"Exclude Directories", None))
-        self.choose_exclude_directories.setText(QCoreApplication.translate("MainWindow", u"Choose...", None))
         self.include_directories_group_box.setTitle(QCoreApplication.translate("MainWindow", u"Include Directories", None))
         self.choose_include_directories.setText(QCoreApplication.translate("MainWindow", u"Choose...", None))
-        self.tabs.setTabText(self.tabs.indexOf(self.directories), QCoreApplication.translate("MainWindow", u"Directories", None))
-        self.include_masks_group_box.setTitle(QCoreApplication.translate("MainWindow", u"Include Masks", None))
-        self.include_mask_line_edit.setText("")
-        self.include_mask_line_edit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Enter mask here...", None))
-        self.add_include_mask_button.setText(QCoreApplication.translate("MainWindow", u"Add", None))
-        self.hashing_algorithm_group_box.setTitle(QCoreApplication.translate("MainWindow", u"Hashing Algorithm", None))
-        self.sha1_radio_button.setText(QCoreApplication.translate("MainWindow", u"SHA1", None))
-        self.md5_radio_button.setText(QCoreApplication.translate("MainWindow", u"MD5", None))
-        self.sha512_radio_button.setText(QCoreApplication.translate("MainWindow", u"SHA512", None))
-        self.exclude_masks_group_box.setTitle(QCoreApplication.translate("MainWindow", u"Exclude Masks", None))
-        self.exclude_mask_line_edit.setText("")
-        self.exclude_mask_line_edit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Enter mask here...", None))
-        self.add_exclude_mask_button.setText(QCoreApplication.translate("MainWindow", u"Add", None))
+        self.exclude_directories_group_box.setTitle(QCoreApplication.translate("MainWindow", u"Exclude Directories", None))
+        self.choose_exclude_directories.setText(QCoreApplication.translate("MainWindow", u"Choose...", None))
         self.search_type_group_box.setTitle(QCoreApplication.translate("MainWindow", u"Search Type", None))
-        self.hash_type.setText(QCoreApplication.translate("MainWindow", u"Hash", None))
-        self.name_type.setText(QCoreApplication.translate("MainWindow", u"Name", None))
+        self.hash.setText(QCoreApplication.translate("MainWindow", u"Hash", None))
+        self.name.setText(QCoreApplication.translate("MainWindow", u"Name", None))
         self.parameters_group_box.setTitle(QCoreApplication.translate("MainWindow", u"Parameters", None))
         self.min_file_size_label.setText(QCoreApplication.translate("MainWindow", u"Min File Size", None))
-        self.block_size_spin_box.setSuffix(QCoreApplication.translate("MainWindow", u" byte(s)", None))
+        self.min_file_size_spin_box.setSuffix("")
+        self.size_suffix_box.setItemText(0, QCoreApplication.translate("MainWindow", u"b", None))
+        self.size_suffix_box.setItemText(1, QCoreApplication.translate("MainWindow", u"KB", None))
+        self.size_suffix_box.setItemText(2, QCoreApplication.translate("MainWindow", u"MB", None))
+        self.size_suffix_box.setItemText(3, QCoreApplication.translate("MainWindow", u"GB", None))
+
         self.depth_label.setText(QCoreApplication.translate("MainWindow", u"Search Depth", None))
-        self.block_size_label.setText(QCoreApplication.translate("MainWindow", u"Block Size", None))
-        self.min_file_size_spin_box.setSuffix(QCoreApplication.translate("MainWindow", u" byte(s)", None))
         self.depth_spin_box.setSuffix("")
-        self.tabs.setTabText(self.tabs.indexOf(self.advanced), QCoreApplication.translate("MainWindow", u"Advanced", None))
+        self.tabs.setTabText(self.tabs.indexOf(self.directories), QCoreApplication.translate("MainWindow", u"Directories", None))
+        self.exclude_masks_group_box.setTitle(QCoreApplication.translate("MainWindow", u"Exclude Masks", None))
+        self.exclude_mask_line_edit.setText("")
+        self.exclude_mask_line_edit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Enter python-style mask here...", None))
+        self.add_exclude_mask_button.setText(QCoreApplication.translate("MainWindow", u"Add", None))
+        self.include_masks_group_box.setTitle(QCoreApplication.translate("MainWindow", u"Include Masks", None))
+        self.include_mask_line_edit.setText("")
+        self.include_mask_line_edit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Enter python-style mask here...", None))
+        self.add_include_mask_button.setText(QCoreApplication.translate("MainWindow", u"Add", None))
+        self.tabs.setTabText(self.tabs.indexOf(self.masks), QCoreApplication.translate("MainWindow", u"Masks", None))
         self.remove_selected_duplicates_button.setText(QCoreApplication.translate("MainWindow", u"Remove Selected", None))
         self.tabs.setTabText(self.tabs.indexOf(self.results), QCoreApplication.translate("MainWindow", u"Results", None))
+        self.menuSettings.setTitle(QCoreApplication.translate("MainWindow", u"Settings", None))
+        self.menuLanguage.setTitle(QCoreApplication.translate("MainWindow", u"Language", None))
+        self.menuTheme.setTitle(QCoreApplication.translate("MainWindow", u"Theme", None))
     # retranslateUi
 
