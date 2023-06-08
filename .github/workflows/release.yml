@@ -44,7 +44,7 @@ jobs:
         run: |
           if [ "${{ runner.os }}" = "Linux" ]; then
             sudo apt update
-            sudo apt install libegl1 libegl1-mesa python-dev gcc -y
+            sudo apt install libegl1 libegl1-mesa python2-dev python3-dev gcc -y
           fi
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
