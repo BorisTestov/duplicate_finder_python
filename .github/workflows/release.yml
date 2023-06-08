@@ -45,6 +45,7 @@ jobs:
           BUILD_NUMBER="5214256783"
           echo "APP_VERSION = \"$MAJOR.$MINOR.$PATCH\"" > version.py
           echo "BUILD_NUMBER = \"$BUILD_NUMBER\"" >> version.py
+          cat version.py
         shell: bash
 
       - name: Install dependencies
@@ -55,6 +56,7 @@ jobs:
           fi
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
+          cat version.py
           python -m pip install pyinstaller
         shell: bash
 
