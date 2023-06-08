@@ -9,5 +9,9 @@ if __name__ == "__main__":
     print(f"version: {APP_VERSION} build: {BUILD_NUMBER}")
     app = QApplication(sys.argv)
     window = MainWindow()
+    app.aboutToQuit.connect(window.searcher.abort)
     window.show()
     sys.exit(app.exec())
+    
+    # TODO fix tests
+    # TODO fix types hint, probably generate docs

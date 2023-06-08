@@ -1,0 +1,81 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+_release'
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest ]
+        include:
+          - os: ubuntu-latest
+            artifact: "duplicate_finder"
+          - os: windows-latest
+            artifact: "duplicate_finder.exe"
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+      - name: Extract version from tag
+        id: get_version
+        run: |
+          echo "::set-output name=VERSION::${GITHUB_REF#refs/tags/}"
+      - name: Update version
+        env:
+          MAJOR: ${{ steps.get_version.outputs.VERSION.split('.')[0] }}
+          MINOR: ${{ steps.get_version.outputs.VERSION.split('.')[1] }}
+          PATCH: ${{ steps.get_version.outputs.VERSION.split('.')[2] }}
+          BUILD_NUMBER: ${{ github.run_id }}
+        run: |
+          python update_version.py
+      - name: Install dependencies
+        run: |
+          if [ "${{ runner.os }}" = "Linux" ]; then
+            sudo apt update
+            sudo apt install libegl1 libegl1-mesa python-dev gcc -y
+          fi
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+          python -m pip install pyinstaller
+      - name: Build
+        run: |
+          pyinstaller duplicate_finder.spec
+      - uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: dist/
+
+  deploy:
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest ]
+        include:
+          - os: ubuntu-latest
+            artifact: "duplicate_finder"
+          - os: windows-latest
+            artifact: "duplicate_finder.exe"
+
+    runs-on: ${{ matrix.os }}
+    needs: build
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/download-artifact@v2
+        with:
+          name: dist
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: "${{ matrix.artifact }}"

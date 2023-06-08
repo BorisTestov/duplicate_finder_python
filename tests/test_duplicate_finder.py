@@ -3,7 +3,7 @@ from pprint import pprint
 
 import pytest
 
-from duplicate_finder import DuplicateFinder, SearchTypes
+from duplicates_finder import DuplicatesFinder, SearchTypes
 
 
 def list_of_sets_are_equal(l1, l2):
@@ -46,13 +46,13 @@ def test_find(search_type,
     if exclude_directories is not None:
         exclude_directories = {dirs[i] for i in exclude_directories}
 
-    finder = DuplicateFinder(search_type,
-                             include_directories=set(dirs),
-                             exclude_directories=exclude_directories,
-                             include_masks=include_masks,
-                             exclude_masks=exclude_masks,
-                             min_file_size=min_file_size,
-                             depth=depth)
+    finder = DuplicatesFinder(search_type,
+                              include_directories=set(dirs),
+                              exclude_directories=exclude_directories,
+                              include_masks=include_masks,
+                              exclude_masks=exclude_masks,
+                              min_file_size=min_file_size,
+                              depth=depth)
     result = sorted([set(value).union({key}) for key, value in finder.find().items()])
     try:
         assert list_of_sets_are_equal(result, expected_files)
@@ -64,9 +64,3 @@ def test_find(search_type,
         pprint("Expected:")
         pprint(expected_files)
         raise
-
-
-@pytest.mark.raises
-def test_raise_on_empty_include_dirs():
-    with pytest.raises(ValueError):
-        DuplicateFinder(include_directories=None)

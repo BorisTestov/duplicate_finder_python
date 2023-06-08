@@ -23,7 +23,8 @@ class Slots:
         if dialog.exec():
             directories = dialog.selectedFiles()
             for d in directories:
-                lw.addItem(d)
+                if len(lw.findItems(d, QtCore.Qt.MatchFlag.MatchExactly)) == 0:
+                    lw.addItem(d)
         dialog.deleteLater()
 
     @staticmethod
@@ -38,8 +39,9 @@ class Slots:
         text = le.text()
         if not text:
             return
-        lw.addItem(text)
-        le.clear()
+        if len(lw.findItems(text, QtCore.Qt.MatchFlag.MatchExactly)) == 0:
+            lw.addItem(text)
+            le.clear()
 
     @staticmethod
     @Slot()
