@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import threading
 
 
@@ -29,3 +31,12 @@ class ThreadSafeSet:
     def __len__(self):
         with self.lock:
             return len(self.set)
+
+    def __eq__(self, other: ThreadSafeSet):
+        with self.lock:
+            with other.lock:
+                return self.set == other.set
+
+    def __repr__(self):
+        with self.lock:
+            return self.set.__repr__()

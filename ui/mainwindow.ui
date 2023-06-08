@@ -1410,7 +1410,7 @@ QPushButton::pressed
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_3">
              <item>
-              <widget class="QRadioButton" name="hash_type">
+              <widget class="QRadioButton" name="hash">
                <property name="text">
                 <string>Hash</string>
                </property>
@@ -1423,7 +1423,7 @@ QPushButton::pressed
               </widget>
              </item>
              <item>
-              <widget class="QRadioButton" name="name_type">
+              <widget class="QRadioButton" name="name">
                <property name="text">
                 <string>Name</string>
                </property>

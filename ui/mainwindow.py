@@ -1,6 +1,5 @@
 import os
 from collections import deque
-from dataclasses import dataclass
 from functools import partial
 
 from PySide6 import QtCore
@@ -12,6 +11,7 @@ from interruptible_task import InterruptibleTask
 from search_types import SearchTypes
 from searcher import Searcher
 from ui.confirmation_dialog import ConfirmationDialog
+from ui.mappings import Mappings
 from ui.slots import Slots
 from ui.ui_mainwindow import Ui_MainWindow
 from version import APP_VERSION, BUILD_NUMBER
@@ -42,21 +42,6 @@ class ProgressBarHelper:
     def step(self) -> None:
         self.__value += self.step_size
         self.pb.setValue(self.__value)
-
-
-@dataclass
-class Mappings:
-    type_mappings = {
-        'hash_type': SearchTypes.BY_HASH,
-        'name_type': SearchTypes.BY_NAME
-    }
-
-    size_mappings = {
-        'b': 2 ** 0,
-        'KB': 2 ** 10,
-        'MB': 2 ** 20,
-        'GB': 2 ** 30
-    }
 
 
 class MainWindow(QMainWindow):

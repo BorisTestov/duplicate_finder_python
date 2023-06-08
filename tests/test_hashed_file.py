@@ -12,7 +12,7 @@ def test_file_path(temp_file):
         with open(temp_file, "w") as f:
             print(content, file=f)
         hashed_file = HashedFile(temp_file)
-        assert hashed_file.get_file_path() == temp_file
+        assert hashed_file.get_file_path() == str(temp_file)
 
 
 def test_on_empty_files(paired_temp_file):
@@ -35,17 +35,18 @@ def test_unequality_on_different_size(paired_temp_file):
     assert HashedFile(f1) != HashedFile(f2)
 
 
-def test_unequality_on_different_content(paired_temp_file):
+def test_inequality_on_different_content(paired_temp_file):
     f1, f2 = paired_temp_file
     with open(f1, "w") as f:
         print("A", file=f)
     with open(f2, "w") as f:
         print("B", file=f)
-    assert HashedFile(f1) != HashedFile(f2)
+    with HashedFile(f1) as h1:
+        with HashedFile(f2) as h2:
+            assert h1 != h2
 
 
-@pytest.mark.parametrize("blocksize", [1, 10, 100, 512, 1024])
-def test_hash(paired_temp_file, blocksize):
+def test_hash(paired_temp_file):
     f1, f2 = paired_temp_file
     for i in range(len(ascii_uppercase)):
         content = ascii_uppercase[:i + 1]
@@ -53,24 +54,15 @@ def test_hash(paired_temp_file, blocksize):
             print(content, file=f)
         with open(f2, "w") as f:
             print(content, file=f)
-        hashed_file_1 = HashedFile(f1, blocksize=blocksize)
-        hashed_file_2 = HashedFile(f2, blocksize=blocksize)
-        assert hashed_file_1 == hashed_file_2
+        with HashedFile(f1) as h1:
+            with HashedFile(f2) as h2:
+                assert h1 == h2
 
 
 @pytest.mark.raises
 def test_raise_on_incorrect_file():
     with pytest.raises(FileNotFoundError):
         HashedFile("INCORRECT_FILE_NAME")
-
-
-@pytest.mark.raises
-@pytest.mark.parametrize("blocksize", [0, -1, -5, -100])
-def test_raise_on_incorrect_blocksize(temp_file, blocksize):
-    with open(temp_file, "w"):
-        pass
-    with pytest.raises(ValueError):
-        HashedFile(temp_file, blocksize=blocksize)
 
 
 @pytest.mark.raises

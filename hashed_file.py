@@ -15,6 +15,8 @@ class HashedFile(QObject):
 
     def __init__(self, path: os.path):
         super(HashedFile, self).__init__()
+        if not os.path.isfile(path):
+            raise FileNotFoundError(f"Path {path} is a directory")
         self.__blocksize = 512
         self.__filepath = path
         self.__hasher = xxhash.xxh64()

@@ -6,6 +6,7 @@ from interruptible_task import InterruptibleTask
 
 
 class InterruptibleClass:
+
     def __init__(self, parent=None):
         self.__list_of_workers = []
         self.__interrupt_event = Event()

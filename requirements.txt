@@ -2,8 +2,5 @@ PySide6==6.5.1
 PySide6_Addons==6.5.1
 PySide6_Essentials==6.5.1
 pytest==7.3.1
-pytest-cov==4.1.0
-pytest-repeat==0.9.1
-pytest-xdist==3.3.1
 Send2Trash==1.8.2
 xxhash==3.2.0

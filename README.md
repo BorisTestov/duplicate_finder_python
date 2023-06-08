@@ -52,9 +52,9 @@ This project uses the following third-party libraries:
 - License: [LGPLv3](https://www.gnu.org/licenses/lgpl-3.0.html)
 - Copyright: [The Qt Company](https://www.qt.io/)
 
-### pytest, pytest-cov, pytest-repeat, pytest-xdist
+### pytest
 
-- Version: pytest 7.3.1, pytest-cov 4.1.0, pytest-repeat 0.9.1, pytest-xdist 3.3.1
+- Version: 7.3.1
 - License: [MIT](https://opensource.org/licenses/MIT)
 - Copyright: [Holger Krekel and pytest-dev contributors](https://pypi.org/project/pytest/)
 
