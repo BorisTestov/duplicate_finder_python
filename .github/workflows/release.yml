@@ -40,11 +40,19 @@ jobs:
         id: get_version
         run: |
           echo "::set-output name=VERSION::${GITHUB_REF#refs/tags/}"
+      - name: Extract version components
+        id: extract_version
+        run: |
+          IFS='.' read -ra VERSION_PARTS <<< "${{ steps.get_version.outputs.VERSION }}"
+          echo "::set-output name=MAJOR::${VERSION_PARTS[0]}"
+          echo "::set-output name=MINOR::${VERSION_PARTS[1]}"
+          echo "::set-output name=PATCH::${VERSION_PARTS[2]}"
+        shell: bash
       - name: Update version
         env:
-          MAJOR: ${{ steps.get_version.outputs.VERSION.split('.')[0] }}
-          MINOR: ${{ steps.get_version.outputs.VERSION.split('.')[1] }}
-          PATCH: ${{ steps.get_version.outputs.VERSION.split('.')[2] }}
+          MAJOR: ${{ steps.extract_version.outputs.MAJOR }}
+          MINOR: ${{ steps.extract_version.outputs.MINOR }}
+          PATCH: ${{ steps.extract_version.outputs.PATCH }}
           BUILD_NUMBER: ${{ github.run_id }}
         run: |
           python update_version.py
