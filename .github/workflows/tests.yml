@@ -22,12 +22,13 @@ jobs:
           python-version: "3.10"
       - name: Install dependencies
         run: |
-          if [ "${{ runner.os }}" = "Linux" ]; then
+          if [ "$RUNNER_OS" == "Linux" ]; then
             sudo apt update
-            sudo apt install libegl1 libegl1-mesa python-dev gcc -y
+            sudo apt install libegl1 libegl1-mesa python2-dev python3-dev gcc -y
           fi
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
+        shell: bash
       - name: Test
         run: |
           python -m pytest ./tests
