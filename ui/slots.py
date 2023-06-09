@@ -1,3 +1,5 @@
+import logging
+
 from PySide6 import QtCore
 from PySide6.QtCore import Slot
 from PySide6.QtWidgets import QListWidget, QAbstractItemView, QTreeView, QListView, QFileDialog, QLineEdit, \
@@ -25,6 +27,7 @@ class Slots:
             for d in directories:
                 if len(lw.findItems(d, QtCore.Qt.MatchFlag.MatchExactly)) == 0:
                     lw.addItem(d)
+                    logging.debug(f"Directory chosen: {d}")
         dialog.deleteLater()
 
     @staticmethod
@@ -32,6 +35,7 @@ class Slots:
     def delete_item(lw: QListWidget):
         for name in lw.selectedItems():
             lw.model().removeRow(lw.row(name))
+            logging.debug(f"Item deleted: {name.text()}")
 
     @staticmethod
     @Slot()
@@ -42,6 +46,7 @@ class Slots:
         if len(lw.findItems(text, QtCore.Qt.MatchFlag.MatchExactly)) == 0:
             lw.addItem(text)
             le.clear()
+            logging.debug(f"Item added to list: {text}")
 
     @staticmethod
     @Slot()
@@ -84,6 +89,8 @@ class Slots:
         finally:
             item.treeWidget().blockSignals(False)
 
+        logging.debug(f"Item changed: {item.text(0)}, Checked: {item.checkState(0)}")
+
     @staticmethod
     @Slot()
     def invert_selection(tree: QTreeWidget):
@@ -97,3 +104,4 @@ class Slots:
         for i in range(tree.topLevelItemCount()):
             top = tree.topLevelItem(i)
             top.setCheckState(0, target_check)
+            logging.debug(f"Invert selection: Item: {top.text(0)}, Checked: {target_check}")

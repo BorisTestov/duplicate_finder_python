@@ -1,3 +1,5 @@
+import logging
+
 from PySide6.QtCore import QRunnable, Signal, Slot, QTimer, QObject
 
 
@@ -24,6 +26,7 @@ class InterruptibleTask(QRunnable, QObject):
 
     def check_interrupt(self):
         if self.isInterruptionRequested:
+            logging.warning("Task interrupted")
             raise Exception("Interrupt requested")
 
     @Slot()
@@ -34,8 +37,10 @@ class InterruptibleTask(QRunnable, QObject):
             result = self.fn(*self.args, **self.kwargs)
             self.result.emit(result)
         except Exception as e:
+            logging.error("Task error occurred", exc_info=True)
             self.error.emit((e, "Task was interrupted"))
         else:
             self.timer.stop()
             self.timer.deleteLater()
+            logging.debug("Task finished successfully")
             self.finished.emit()

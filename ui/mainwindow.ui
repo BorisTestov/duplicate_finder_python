@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>DuplicateFinder</class>
+ <widget class="QMainWindow" name="DuplicateFinder">
   <property name="enabled">
    <bool>true</bool>
   </property>
@@ -9,12 +9,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>872</width>
+    <width>738</width>
     <height>701</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Duplicate Finder</string>
   </property>
   <property name="styleSheet">
    <string notr="true">/*Copyright (c) DevSec Studio. All rights reserved.
@@ -22,7 +22,7 @@
 MIT License
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the &quot;Software&quot;), to deal
+of this software and associated documentation files (the &amp;quot;Software&amp;quot;), to deal
 in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
@@ -40,10 +40,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+*
+{
+    font-size: 9pt;
+    font-weight: bold;
+}
+
+
+
 /*-----QWidget-----*/
 QWidget
 {
-	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(102, 115, 140, 255),stop:1 rgba(56, 63, 77, 255));
+	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(155,185,200, 255),stop:1 rgba(200,223,230, 255));
 	color: #ffffff;
 	border-color: #051a39;
 
@@ -54,7 +62,7 @@ QWidget
 QLabel
 {
 	background-color: transparent;
-	color: #ffffff;
+	color: #000;
 	font-weight: bold;
 
 }
@@ -71,9 +79,9 @@ QLabel::disabled
 /*-----QMenuBar-----*/
 QMenuBar
 {
-	background-color: #484c58;
-	color: #ffffff;
-	border-color: #051a39;
+	background-color: #a4a8b4;/*484c58;*/
+	color: #000;
+	border-color: #fae5c6;
 	font-weight: bold;
 
 }
@@ -98,7 +106,7 @@ QMenuBar::item
 QMenuBar::item:selected
 {
     background-color: #c4c5c3;
-	color: #000000;
+	color: #ccc;
     border: 1px solid #000000;
 
 }
@@ -174,8 +182,8 @@ QToolTip
 /*-----QPushButton-----*/
 QPushButton
 {
-	background-color: qlineargradient(spread:repeat, x1:0.486, y1:0, x2:0.505, y2:1, stop:0.00480769 rgba(170, 0, 0, 255),stop:1 rgba(122, 0, 0, 255));
-	color: #ffffff;
+	background-color: qlineargradient(spread:repeat, x1:0.486, y1:0, x2:0.505, y2:1, stop:0.00480769 rgba(80, 255, 255, 255),stop:1 rgba(30, 100, 100, 255));
+	color: #000;
 	font-weight: bold;
 	border-style: solid;
 	border-width: 1px;
@@ -197,8 +205,8 @@ QPushButton::disabled
 
 QPushButton::hover
 {
-	background-color: #9c0000;
-	color: #ffffff;
+	background-color: #00469c;
+	color: #000;
 	border-style: solid;
 	border-width: 1px;
 	border-radius: 3px;
@@ -210,8 +218,8 @@ QPushButton::hover
 
 QPushButton::pressed
 {
-	background-color: #880000;
-	color: #ffffff;
+	background-color: #004488;
+	color: #000;
 	border-style: solid;
 	border-width: 2px;
 	border-radius: 3px;
@@ -222,7 +230,7 @@ QPushButton::pressed
 
 
 /*-----QToolButton-----*/
-QToolButton 
+QToolButton
 {
 	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(177, 181, 193, 255),stop:1 rgba(159, 163, 174, 255));
 	color: #ffffff;
@@ -376,7 +384,7 @@ QTextEdit::disabled
 
 
 /*-----QGroupBox-----*/
-QGroupBox 
+QGroupBox
 {
     border: 1px groove #333333;
 	border-radius: 2px;
@@ -385,7 +393,7 @@ QGroupBox
 }
 
 
-QGroupBox 
+QGroupBox
 {
 	background-color: qlineargradient(spread:repeat, x1:0.486, y1:0, x2:0.505, y2:1, stop:0.00480769 rgba(170, 169, 169, 255),stop:1 rgba(122, 122, 122, 255));
 	font-weight: bold;
@@ -393,7 +401,7 @@ QGroupBox
 }
 
 
-QGroupBox::title  
+QGroupBox::title
 {
     background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(71, 75, 87, 255),stop:1 rgba(35, 37, 43, 255));
     color: #ffffff;
@@ -479,34 +487,34 @@ QRadioButton{
 
 
 QRadioButton::indicator::unchecked
-{ 
-	border: 2px inset #222222; 
-	border-radius: 6px; 
+{
+	border: 2px inset #222222;
+	border-radius: 6px;
 	background-color:  #323232;
-	width: 9px; 
-	height: 9px; 
+	width: 9px;
+	height: 9px;
 
 }
 
 
 QRadioButton::indicator::unchecked:hover
-{ 
-	border: 2px solid #00ff00; 
-	border-radius: 5px; 
+{
+	border: 2px solid #00ff00;
+	border-radius: 5px;
 	background-color:  #323232;
-	width: 9px; 
-	height: 9px; 
+	width: 9px;
+	height: 9px;
 
 }
 
 
 QRadioButton::indicator::checked
-{ 
-	border: 2px inset #222222; 
-	border-radius: 5px; 
-	background-color: #00ff00; 
-	width: 9px; 
-	height: 9px; 
+{
+	border: 2px inset #222222;
+	border-radius: 5px;
+	background-color: #00ff00;
+	width: 9px;
+	height: 9px;
 
 }
 
@@ -527,7 +535,7 @@ QRadioButton::indicator:disabled
 }
 
 
-/*-----QTableView &amp; QTableWidget-----*/
+/*-----QTableView &amp;amp; QTableWidget-----*/
 QTableView
 {
     background-color: #808080;
@@ -551,7 +559,7 @@ QTableView::disabled
 }
 
 
-QTableView::item:hover 
+QTableView::item:hover
 {
     background-color: #484c58;
     color: #f0f0f0;
@@ -559,7 +567,7 @@ QTableView::item:hover
 }
 
 
-QTableView::item:selected 
+QTableView::item:selected
 {
     background-color: #484c58;
     border: 2px groove #00ff00;
@@ -591,7 +599,7 @@ QHeaderView::section
 	font-weight: bold;
     text-align: left;
 	padding: 4px;
-	
+
 }
 
 
@@ -656,7 +664,7 @@ QTabBar::tab
 	font-weight: bold;
 	width: 80px;
 	height: 9px;
-	
+
 }
 
 
@@ -668,7 +676,7 @@ QTabBar::tab:disabled
 }
 
 
-QTabWidget::pane 
+QTabWidget::pane
 {
 	background-color: transparent;
 	color: #ffffff;
@@ -695,35 +703,35 @@ QTabBar::tab:selected:disabled
 }
 
 
-QTabBar::tab:!selected 
+QTabBar::tab:!selected
 {
     background-color: #a3a7b2;
 
 }
 
 
-QTabBar::tab:!selected:hover 
+QTabBar::tab:!selected:hover
 {
     background-color: #484c58;
 
 }
 
 
-QTabBar::tab:top:!selected 
+QTabBar::tab:top:!selected
 {
     margin-top: 1px;
 
 }
 
 
-QTabBar::tab:bottom:!selected 
+QTabBar::tab:bottom:!selected
 {
     margin-bottom: 3px;
 
 }
 
 
-QTabBar::tab:top, QTabBar::tab:bottom 
+QTabBar::tab:top, QTabBar::tab:bottom
 {
     min-width: 8ex;
     margin-right: -1px;
@@ -732,14 +740,14 @@ QTabBar::tab:top, QTabBar::tab:bottom
 }
 
 
-QTabBar::tab:top:selected 
+QTabBar::tab:top:selected
 {
     border-bottom-color: none;
 
 }
 
 
-QTabBar::tab:bottom:selected 
+QTabBar::tab:bottom:selected
 {
     border-top-color: none;
 
@@ -747,14 +755,14 @@ QTabBar::tab:bottom:selected
 
 
 QTabBar::tab:top:last, QTabBar::tab:bottom:last,
-QTabBar::tab:top:only-one, QTabBar::tab:bottom:only-one 
+QTabBar::tab:top:only-one, QTabBar::tab:bottom:only-one
 {
     margin-right: 0;
 
 }
 
 
-QTabBar::tab:left:!selected 
+QTabBar::tab:left:!selected
 {
     margin-right: 2px;
 
@@ -768,7 +776,7 @@ QTabBar::tab:right:!selected
 }
 
 
-QTabBar::tab:left, QTabBar::tab:right 
+QTabBar::tab:left, QTabBar::tab:right
 {
     min-height: 15ex;
     margin-bottom: -1px;
@@ -777,14 +785,14 @@ QTabBar::tab:left, QTabBar::tab:right
 }
 
 
-QTabBar::tab:left:selected 
+QTabBar::tab:left:selected
 {
     border-left-color: none;
 
 }
 
 
-QTabBar::tab:right:selected 
+QTabBar::tab:right:selected
 {
     border-right-color: none;
 
@@ -792,7 +800,7 @@ QTabBar::tab:right:selected
 
 
 QTabBar::tab:left:last, QTabBar::tab:right:last,
-QTabBar::tab:left:only-one, QTabBar::tab:right:only-one 
+QTabBar::tab:left:only-one, QTabBar::tab:right:only-one
 {
     margin-bottom: 0;
 
@@ -806,7 +814,7 @@ QSlider{
 }
 
 
-QSlider::groove:horizontal 
+QSlider::groove:horizontal
 {
 	background-color: transparent;
 	height: 6px;
@@ -814,7 +822,7 @@ QSlider::groove:horizontal
 }
 
 
-QSlider::sub-page:horizontal 
+QSlider::sub-page:horizontal
 {
 	background-color: qlineargradient(spread:reflect, x1:1, y1:0, x2:1, y2:1, stop:0.00480769 rgba(201, 201, 201, 255),stop:1 rgba(72, 72, 72, 255));
 	border: 1px solid #000;
@@ -822,18 +830,18 @@ QSlider::sub-page:horizontal
 }
 
 
-QSlider::add-page:horizontal 
+QSlider::add-page:horizontal
 {
 	background-color: #404040;
-	border: 1px solid #000; 
+	border: 1px solid #000;
 
 }
 
 
-QSlider::handle:horizontal 
+QSlider::handle:horizontal
 {
 	background-color: qlineargradient(spread:reflect, x1:1, y1:0, x2:1, y2:1, stop:0.00480769 rgba(201, 201, 201, 255),stop:1 rgba(72, 72, 72, 255));
-	border: 1px solid #000; 
+	border: 1px solid #000;
 	width: 12px;
 	margin-top: -6px;
 	margin-bottom: -6px;
@@ -841,14 +849,14 @@ QSlider::handle:horizontal
 }
 
 
-QSlider::handle:horizontal:hover 
+QSlider::handle:horizontal:hover
 {
 	background-color: #808080;
 
 }
 
 
-QSlider::sub-page:horizontal:disabled 
+QSlider::sub-page:horizontal:disabled
 {
 	background-color: #bbb;
 	border-color: #999;
@@ -856,7 +864,7 @@ QSlider::sub-page:horizontal:disabled
 }
 
 
-QSlider::add-page:horizontal:disabled 
+QSlider::add-page:horizontal:disabled
 {
 	background-color: #eee;
 	border-color: #999;
@@ -864,7 +872,7 @@ QSlider::add-page:horizontal:disabled
 }
 
 
-QSlider::handle:horizontal:disabled 
+QSlider::handle:horizontal:disabled
 {
 	background-color: #eee;
 	border: 1px solid #aaa;
@@ -872,7 +880,7 @@ QSlider::handle:horizontal:disabled
 }
 
 
-QSlider::groove:vertical 
+QSlider::groove:vertical
 {
 	background-color: transparent;
 	width: 6px;
@@ -880,7 +888,7 @@ QSlider::groove:vertical
 }
 
 
-QSlider::sub-page:vertical 
+QSlider::sub-page:vertical
 {
 	background-color: qlineargradient(spread:reflect, x1:0, y1:0.483, x2:1, y2:0.517, stop:0.00480769 rgba(201, 201, 201, 255),stop:1 rgba(72, 72, 72, 255));
 	border: 1px solid #000;
@@ -888,7 +896,7 @@ QSlider::sub-page:vertical
 }
 
 
-QSlider::add-page:vertical 
+QSlider::add-page:vertical
 {
 	background-color: #404040;
 	border: 1px solid #000;
@@ -896,7 +904,7 @@ QSlider::add-page:vertical
 }
 
 
-QSlider::handle:vertical 
+QSlider::handle:vertical
 {
 	background-color: qlineargradient(spread:reflect, x1:0, y1:0.483, x2:1, y2:0.517, stop:0.00480769 rgba(201, 201, 201, 255),stop:1 rgba(72, 72, 72, 255));
 	border: 1px solid #000;
@@ -907,14 +915,14 @@ QSlider::handle:vertical
 }
 
 
-QSlider::handle:vertical:hover 
+QSlider::handle:vertical:hover
 {
 	background-color: #808080;
 
 }
 
 
-QSlider::sub-page:vertical:disabled 
+QSlider::sub-page:vertical:disabled
 {
 	background-color: #bbb;
 	border-color: #999;
@@ -922,7 +930,7 @@ QSlider::sub-page:vertical:disabled
 }
 
 
-QSlider::add-page:vertical:disabled 
+QSlider::add-page:vertical:disabled
 {
 	background-color: #eee;
 	border-color: #999;
@@ -930,7 +938,7 @@ QSlider::add-page:vertical:disabled
 }
 
 
-QSlider::handle:vertical:disabled 
+QSlider::handle:vertical:disabled
 {
 	background-color: #eee;
 	border: 1px solid #aaa;
@@ -1142,31 +1150,53 @@ QStatusBar
 }
 
 
-</string>
-  </property>
-  <property name="tabShape">
-   <enum>QTabWidget::Rounded</enum>
-  </property>
-  <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="0">
-     <layout class="QGridLayout" name="search_runner_layout">
-      <item row="1" column="1">
-       <widget class="QPushButton" name="search_button">
-        <property name="minimumSize">
-         <size>
-          <width>200</width>
-          <height>56</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>56</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton
+/*-----Green buttons-----*/
+QPushButton#search_button
+{
+	background-color: qlineargradient(spread:repeat, x1:0.486, y1:0, x2:0.505, y2:1, stop:0.00480769 rgba(80, 255, 80, 255),stop:1 rgba(30, 200, 30, 255));
+	color: #000;
+	font-weight: bold;
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 3px;
+	border-color: #051a39;
+	padding: 5px;
+}
+
+
+QPushButton#search_button::disabled
+{
+	background-color: #404040;
+	color: #656565;
+	border-color: #051a39;
+}
+
+
+QPushButton#search_button::hover
+{
+	background-color: #009c00;
+	color: #000;
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 3px;
+	border-color: #051a39;
+	padding: 5px;
+}
+
+
+QPushButton#search_button::pressed
+{
+	background-color: #008800;
+	color: #000;
+	border-style: solid;
+	border-width: 2px;
+	border-radius: 3px;
+	border-color: #000000;
+	padding: 5px;
+}
+
+
+QPushButton#delete_files_ok_button
 {
 	background-color: qlineargradient(spread:repeat, x1:0.486, y1:0, x2:0.505, y2:1, stop:0.00480769 rgba(0, 170, 0, 255),stop:1 rgba(0, 122, 0, 255));
 	color: #ffffff;
@@ -1180,7 +1210,7 @@ QStatusBar
 }
 
 
-QPushButton::disabled
+QPushButton#delete_files_ok_button::disabled
 {
 	background-color: #404040;
 	color: #656565;
@@ -1189,7 +1219,7 @@ QPushButton::disabled
 }
 
 
-QPushButton::hover
+QPushButton#delete_files_ok_button::hover
 {
 	background-color: #009c00;
 	color: #ffffff;
@@ -1198,11 +1228,10 @@ QPushButton::hover
 	border-radius: 3px;
 	border-color: #051a39;
 	padding: 5px;
-
 }
 
 
-QPushButton::pressed
+QPushButton#delete_files_ok_button::pressed
 {
 	background-color: #008800;
 	color: #ffffff;
@@ -1211,28 +1240,16 @@ QPushButton::pressed
 	border-radius: 3px;
 	border-color: #000000;
 	padding: 5px;
-
 }
 </string>
-        </property>
-        <property name="text">
-         <string>SEARCH</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="2">
-       <spacer name="right_spacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
+  </property>
+  <property name="tabShape">
+   <enum>QTabWidget::Rounded</enum>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="1" column="0">
+     <layout class="QGridLayout" name="search_runner_layout">
       <item row="0" column="0" colspan="3">
        <widget class="QProgressBar" name="progress_bar">
         <property name="enabled">
@@ -1269,17 +1286,42 @@ QPushButton::pressed
        </widget>
       </item>
       <item row="1" column="0">
-       <spacer name="left_spacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+       <widget class="QPushButton" name="abort_button">
+        <property name="enabled">
+         <bool>false</bool>
         </property>
-        <property name="sizeHint" stdset="0">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>CANCEL</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QPushButton" name="search_button">
+        <property name="minimumSize">
          <size>
-          <width>40</width>
-          <height>20</height>
+          <width>200</width>
+          <height>56</height>
          </size>
         </property>
-       </spacer>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>56</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>SEARCH</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
@@ -1287,7 +1329,7 @@ QPushButton::pressed
      <widget class="QTabWidget" name="tabs">
       <property name="font">
        <font>
-        <pointsize>8</pointsize>
+        <pointsize>9</pointsize>
         <italic>false</italic>
         <bold>true</bold>
         <underline>false</underline>
@@ -1336,7 +1378,7 @@ QPushButton::pressed
            </size>
           </property>
           <property name="title">
-           <string>Include Directories</string>
+           <string>Included Directories</string>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
@@ -1367,7 +1409,7 @@ QPushButton::pressed
            </size>
           </property>
           <property name="title">
-           <string>Exclude Directories</string>
+           <string>Excluded Directories</string>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout">
            <item>
@@ -1384,7 +1426,7 @@ QPushButton::pressed
          </widget>
         </item>
         <item row="0" column="4" colspan="2">
-         <layout class="QVBoxLayout" name="search_parameters_layput">
+         <layout class="QVBoxLayout" name="search_parameters_layout">
           <item>
            <widget class="QGroupBox" name="search_type_group_box">
             <property name="sizePolicy">
@@ -1476,6 +1518,12 @@ QPushButton::pressed
               <layout class="QHBoxLayout" name="horizontalLayout">
                <item>
                 <widget class="QSpinBox" name="min_file_size_spin_box">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
                  <property name="styleSheet">
                   <string notr="true"/>
                  </property>
@@ -1504,6 +1552,12 @@ QPushButton::pressed
                </item>
                <item>
                 <widget class="QComboBox" name="size_suffix_box">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
                  <item>
                   <property name="text">
                    <string>b</string>
@@ -1543,6 +1597,12 @@ QPushButton::pressed
              </item>
              <item>
               <widget class="QSpinBox" name="depth_spin_box">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="styleSheet">
                 <string notr="true"/>
                </property>
@@ -1584,7 +1644,7 @@ QPushButton::pressed
         <item row="0" column="1" rowspan="2">
          <widget class="QGroupBox" name="exclude_masks_group_box">
           <property name="title">
-           <string>Exclude Masks</string>
+           <string>Excluded Masks</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_8">
            <item row="1" column="1">
@@ -1625,7 +1685,7 @@ QPushButton::pressed
            </sizepolicy>
           </property>
           <property name="title">
-           <string>Include Masks</string>
+           <string>Included Masks</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_9">
            <item row="1" column="1">
@@ -1706,8 +1766,13 @@ QPushButton::pressed
         <item row="0" column="0" colspan="3">
          <widget class="QTreeWidget" name="duplicates_tree_widget">
           <property name="columnCount">
-           <number>0</number>
+           <number>1</number>
           </property>
+          <column>
+           <property name="text">
+            <string>Path</string>
+           </property>
+          </column>
          </widget>
         </item>
        </layout>
@@ -1721,7 +1786,7 @@ QPushButton::pressed
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>872</width>
+     <width>738</width>
      <height>22</height>
     </rect>
    </property>
@@ -1729,13 +1794,6 @@ QPushButton::pressed
     <property name="title">
      <string>Settings</string>
     </property>
-    <widget class="QMenu" name="menuLanguage">
-     <property name="title">
-      <string>Language</string>
-     </property>
-     <addaction name="Russian"/>
-     <addaction name="English"/>
-    </widget>
     <widget class="QMenu" name="menuTheme">
      <property name="title">
       <string>Theme</string>
@@ -1743,30 +1801,113 @@ QPushButton::pressed
      <addaction name="dark"/>
      <addaction name="light"/>
     </widget>
+    <widget class="QMenu" name="languages">
+     <property name="title">
+      <string>Language</string>
+     </property>
+     <addaction name="chinese"/>
+     <addaction name="english"/>
+     <addaction name="french"/>
+     <addaction name="german"/>
+     <addaction name="italian"/>
+     <addaction name="japanese"/>
+     <addaction name="russian"/>
+     <addaction name="spanish"/>
+    </widget>
     <addaction name="menuTheme"/>
-    <addaction name="menuLanguage"/>
+    <addaction name="languages"/>
    </widget>
    <addaction name="menuSettings"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="Russian">
    <property name="text">
-    <string>TBA</string>
+    <string>Russian</string>
    </property>
   </action>
   <action name="English">
    <property name="text">
-    <string>TBA</string>
+    <string>English</string>
    </property>
   </action>
   <action name="dark">
    <property name="text">
-    <string>TBA</string>
+    <string>Dark</string>
    </property>
   </action>
   <action name="light">
    <property name="text">
-    <string>TBA</string>
+    <string>Light</string>
+   </property>
+  </action>
+  <action name="actionGerman">
+   <property name="text">
+    <string>German</string>
+   </property>
+  </action>
+  <action name="actionFrench">
+   <property name="text">
+    <string>French</string>
+   </property>
+  </action>
+  <action name="actionSpanish">
+   <property name="text">
+    <string>Spanish</string>
+   </property>
+  </action>
+  <action name="actionFrench_2">
+   <property name="text">
+    <string>French</string>
+   </property>
+  </action>
+  <action name="actionChinese">
+   <property name="text">
+    <string>Chinese</string>
+   </property>
+  </action>
+  <action name="actionJapanese">
+   <property name="text">
+    <string>Japanese</string>
+   </property>
+  </action>
+  <action name="chinese">
+   <property name="text">
+    <string>Chinese</string>
+   </property>
+  </action>
+  <action name="english">
+   <property name="text">
+    <string>English</string>
+   </property>
+  </action>
+  <action name="french">
+   <property name="text">
+    <string>French</string>
+   </property>
+  </action>
+  <action name="german">
+   <property name="text">
+    <string>German</string>
+   </property>
+  </action>
+  <action name="italian">
+   <property name="text">
+    <string>Italian</string>
+   </property>
+  </action>
+  <action name="japanese">
+   <property name="text">
+    <string>Japanese</string>
+   </property>
+  </action>
+  <action name="russian">
+   <property name="text">
+    <string>Russian</string>
+   </property>
+  </action>
+  <action name="spanish">
+   <property name="text">
+    <string>Spanish</string>
    </property>
   </action>
  </widget>

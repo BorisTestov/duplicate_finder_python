@@ -1,23 +1,28 @@
+import logging
 from threading import Event
 
-from PySide6.QtCore import QTimer, QThreadPool, QCoreApplication
+from PySide6.QtCore import QTimer, Signal, QObject, QThreadPool
 
 from interruptible_task import InterruptibleTask
 
 
-class InterruptibleClass:
+class InterruptibleClass(QObject):
+    interrupted = Signal()
 
     def __init__(self, parent=None):
+        QObject.__init__(self)
+
         self.__list_of_workers = []
         self.__interrupt_event = Event()
-        self.__timer = QTimer(QCoreApplication.instance())
+        self.__timer = QTimer()
         self.__timer.timeout.connect(self._try_interrupt)
         self.__timer.setInterval(1000)
-        self.__timer.start()
         self.__thread_pool = QThreadPool()
 
     def interrupt(self):
+        logging.warning(f"Interrupting class {self}")
         self.__interrupt_event.set()
+        self.interrupted.emit()
 
     def _try_interrupt(self):
         if self.__interrupt_event.is_set():
@@ -26,7 +31,7 @@ class InterruptibleClass:
             self.__thread_pool.waitForDone()
 
     def _add_task(self, fn, *args, **kwargs):
-        # print(fn, args, kwargs)  # will go to logging
+        logging.debug(f"Adding task {fn}")
         worker = InterruptibleTask(fn, *args, **kwargs)
         self.__list_of_workers.append(worker)
         self.__thread_pool.start(worker)

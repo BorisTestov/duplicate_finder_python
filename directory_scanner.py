@@ -1,19 +1,20 @@
+import logging
 import os
 import re
 from collections import deque
 from typing import Set, Union
 
-from PySide6.QtCore import Signal, QObject
+from PySide6.QtCore import Signal
 
 from interruptible_class import InterruptibleClass
 from thread_safe_set import ThreadSafeSet
 
 
-class DirectoryScanner(QObject, InterruptibleClass):
+class DirectoryScanner(InterruptibleClass):
     all_files_added = Signal(deque)
 
     def __init__(self):
-        QObject.__init__(self)
+        # QObject.__init__(self)
         InterruptibleClass.__init__(self, parent=self)
         self._depth = 0
         self._min_file_size = 0
@@ -24,10 +25,12 @@ class DirectoryScanner(QObject, InterruptibleClass):
         self._files_to_scan = ThreadSafeSet()
 
     def scan(self):
+        logging.info("Directory scanner started")
         self._files_to_scan.clear()
         for dir in self._include_directories:
             self._add_task(self.__scan_directory, dir, self._depth)
         self._wait_for_tasks_completion()
+        logging.info("All directories scanned")
         self.all_files_added.emit(self._files_to_scan)
 
     @property
@@ -126,10 +129,10 @@ class DirectoryScanner(QObject, InterruptibleClass):
             try:
                 subdirs = self.__handle_directory(path)
                 queue.extend((subdir, current_depth - 1) for subdir in subdirs)
-            except PermissionError:
-                print(f"Permission denied: {path}")
+            except PermissionError as e:
+                logging.error(f"Permission denied: {path}, Error: {e}")
             except Exception as e:
-                print(f"An error occurred during scanning: {str(e)}")
+                logging.error(f"An error occurred during scanning: {str(e)}")
 
     def __handle_directory(self, path):
         if not os.access(path, os.R_OK):
@@ -148,6 +151,6 @@ class DirectoryScanner(QObject, InterruptibleClass):
         if not self.__can_add_file(path):
             return
         if not self.__can_read(path):
-            print(f"Can't read file {path}. Check permissions.")
+            logging.error(f"Can't read file {path}. Check permissions.")
             return
         self._files_to_scan.add(path)

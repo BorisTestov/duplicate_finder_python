@@ -1,3 +1,5 @@
+import logging
+
 from PySide6.QtWidgets import QDialog
 
 from ui.ui_confirmation_dialog import Ui_delete_files_dialog
@@ -13,3 +15,12 @@ class ConfirmationDialog(QDialog):
     def __connect_slots(self):
         self.ui.delete_files_cancel_button.clicked.connect(self.reject)
         self.ui.delete_files_ok_button.clicked.connect(self.accept)
+        logging.debug("Confirmation dialog slots connected")
+
+    def accept(self):
+        logging.debug("Confirmation dialog accepted")
+        super().accept()
+
+    def reject(self):
+        logging.debug("Confirmation dialog rejected")
+        super().reject()
