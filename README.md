@@ -82,6 +82,45 @@ This window is to see search results (if any) and to remove duplicates.
 
 ![dialog.jpg](usage_images/dialog.jpg)
 
+## Command-line options
+
+- `--cli`: Run the application from the console.
+
+- `-v` or `--version`: Print the application version and exit.
+
+- `--loglevel`: Set the logging level. Accepts one of the following options: "debug", "info", "warning", "error", "
+  critical". Default is "info".
+
+When `--cli` is specified, the following options are available:
+
+- `--include-directories`: An array of directories to include. This option is required when --cli is specified.
+
+- `--exclude-directories`: An array of directories to exclude. Default is an empty array.
+
+- `--include-masks`: An array of masks to include. Default is an empty array.
+
+- `--exclude-masks`: An array of masks to exclude. Default is an empty array.
+
+- `--min-file-size-bytes`: Minimum file size in bytes. Default is 0.
+
+- `--depth`: Depth of directory scanning. Default is 0.
+
+- `--search-type`: Type of search to perform. Default is 'hash'.
+
+- `--remove-after-find`: Removes the file after it is found. Default is False.
+
+### Example
+
+```bash
+./duplicate_finder --cli --include-directories /path/to/directory 
+--exclude-directories /path/to/exclude --min-file-size-bytes 500 
+--depth 2 --search-type hash
+```
+
+This command will run the application in CLI mode, scan the directory at /path/to/directory and its subdirectories up to
+2 levels deep, excluding /path/to/exclude. It will search for duplicate files based on their hash and only consider
+files that are at least 500 bytes in size.
+
 ## Contributing
 
 Contributions are welcome. Feel free to open an issue or submit a pull request.

@@ -1,3 +1,4 @@
+import logging
 from collections import deque
 
 from PySide6.QtCore import QObject, Signal
@@ -21,12 +22,13 @@ class CLIRunner(QObject):
             self.searcher.search_done.connect(lambda: self.finished.emit())
 
     def print_output(self, result):
-        print("\n\nDUPLICATES:\n")
+        output = ["\n\nDUPLICATES:\n"]
         for key, value in result.items():
-            print(f"{key}")
+            output.append(f"\n{key}")
             for v in value:
-                print(f"\t{v}")
-        print("\n\n")
+                output.append(f"\n\t{v}")
+        output.append("\n\n")
+        logging.info(''.join(output))
 
     def run(self, include_directories, exclude_directories, include_masks, exclude_masks, depth, min_file_size,
             search_type):
