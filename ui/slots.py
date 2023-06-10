@@ -93,7 +93,7 @@ class Slots:
 
     @staticmethod
     @Slot()
-    def invert_selection(tree: QTreeWidget):
+    def invert_selection(tree: QTreeWidget, *args):
         target_check = QtCore.Qt.CheckState.Unchecked
         for i in range(tree.topLevelItemCount()):
             top = tree.topLevelItem(i)

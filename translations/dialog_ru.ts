@@ -9,17 +9,17 @@
         <translation>Подтверждение</translation>
     </message>
     <message>
-        <location filename="../ui/confirmation_dialog.ui" line="1193"/>
+        <location filename="../ui/confirmation_dialog.ui" line="47"/>
         <source>Move selected files to thrash?</source>
         <translation>Переместить выбранные файлы в корзину?</translation>
     </message>
     <message>
-        <location filename="../ui/confirmation_dialog.ui" line="1297"/>
+        <location filename="../ui/confirmation_dialog.ui" line="57"/>
         <source>OK</source>
         <translation>ОК</translation>
     </message>
     <message>
-        <location filename="../ui/confirmation_dialog.ui" line="1304"/>
+        <location filename="../ui/confirmation_dialog.ui" line="64"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>

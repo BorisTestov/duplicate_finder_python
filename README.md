@@ -25,9 +25,62 @@ simply download the executable file from the latest release and run it on your s
 
 ## Usage Instructions
 
-After successful installation, open the Duplicate Finder application. Add the directory you want to scan, adjust your
-search preferences (if any), and click 'Search'. You can review the found duplicates and move any of them to the trash
-as per your requirements.
+### Main window
+
+![window1.jpg](usage_images/window1.jpg)
+
+When you open the app, you will see the main windows, as on image above.
+
+1. List of directories to include for search. To start search, you must choose at least 1 directory
+2. List of directories to exclude from search. Optional. Excluding has more priority than including, so if you include
+   directories `A/` and `B/` and then exclude `B/` than app will include only `A/`
+3. Button to choose directories to include
+4. Button to choose directories to exclude
+5. Choosing Search type. Hash is default. If you choose Hash than app will compare file content. If you choose name the
+   app will compare file names, so files with equal names will be counted as duplicates regardless of the content.
+6. Additional search parameters.
+    - Min file size - it's minimum size to include file to search. 0 - include all files
+    - Search depth - depth of search for subdirectories. 0 - don't include subdirectories
+7. Cancel button. Used to cancel search or removing.
+8. Search button - click to start duplicates search
+9. Additional tabs
+
+- Directories - main tab to choose directories and search parameters
+- Masks - tab to set up masks (see next image)
+- Results - search results (see after next image)
+
+10. Setting. Here you can choose different theme (light or dark, dark is default) and different languages. Available
+    languages are: Chinese, English, French, German, Italian, Japanese, Russian, Spanish. These settings are persistent,
+    they will be saved for future app runs.
+
+### Masks window
+
+![window2.jpg](usage_images/window2.jpg)
+
+This window is to set up masks. Mask is a pattern, that will trigger on some string (in this case, on file names).
+
+This app use [Python-style masks](https://docs.python.org/3/howto/regex.html)
+
+1. List of masks to include file. App will include only files with the name that matches at least one mask. If no masks
+   defined - all files will be included
+2. List of masks to exclude file. App will exclude files with the name that matches the mask(s).
+3. Input to write new include mask.
+4. Input to write new exclude mask
+5. Add mask from include input line to list of included masks
+6. Add mask from exclude input line to list of excluded masks
+
+### Results window
+
+![window3.jpg](usage_images/window3.jpg)
+
+This window is to see search results (if any) and to remove duplicates.
+
+1. List of duplicates. For duplicates original file is the file with minimum lexicographic (alphabet sort) name.
+2. Duplicates header. If you doubleclick it, it will select/deselect all files
+3. Remove button. It's used to remove all selected duplicates. Original files will not be removed. All removed files
+   will be moved in Recycle Bin. Before removing, you need to confirm it in separate dialog window (as in next image).
+
+![dialog.jpg](usage_images/dialog.jpg)
 
 ## Contributing
 
