@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 import os
 from collections import deque
 from math import ceil
@@ -10,7 +11,7 @@ from PySide6.QtCore import QObject, QFile, QIODevice
 
 
 class HashedFile(QObject):
-    __slots__ = ('__blocksize', '__filepath', '__file_handle', '__hash_method',
+    __slots__ = ('__blocksize', '__filepath', '__file_handle', '__hasher',
                  '__hash_data', '__filesize', '__max_blocks_amount')
 
     def __init__(self, path: os.path):
@@ -29,7 +30,7 @@ class HashedFile(QObject):
             self.__file_handle = QFile(self.get_file_path())
             self.__file_handle.open(QIODevice.ReadOnly)
         except Exception as e:
-            print(e)
+            logging.error(f"Failed to open file: {e}")
             raise
         return self
 
@@ -56,18 +57,24 @@ class HashedFile(QObject):
 
     def get_hash_node(self, block_index: int) -> QByteArray:
         if block_index >= self.__max_blocks_amount or block_index < 0:
+            logging.error(f"Invalid block index value: {block_index}")
             raise ValueError("Invalid block index value")
         if block_index >= len(self.__hash_data):
             self.get_chunk_hash()
         return self.__hash_data[block_index]
 
     def get_chunk_hash(self):
-        self.__file_handle.seek(self.__blocksize * len(self.__hash_data))
-        data = self.__file_handle.read(self.__blocksize)
-        self.__hasher.update(data.data())
-        hash = self.__hasher.hexdigest()
-        self.__hash_data.append(hash)
-        return hash
+        try:
+            self.__file_handle.seek(self.__blocksize * len(self.__hash_data))
+            data = self.__file_handle.read(self.__blocksize)
+            self.__hasher.update(data.data())
+            hash = self.__hasher.hexdigest()
+            self.__hash_data.append(hash)
+            logging.debug(f"Calculated hash for block {len(self.__hash_data) - 1}: {hash}")
+            return hash
+        except Exception as e:
+            logging.error(f"Failed to calculate hash: {e}")
+            raise
 
     def get_base_name(self):
         return os.path.basename(self.get_file_path())

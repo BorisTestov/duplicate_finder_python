@@ -1,9 +1,10 @@
+import logging
 import os
 import traceback
 from collections import defaultdict
 from typing import Set
 
-from PySide6.QtCore import Signal, QObject, QThreadPool
+from PySide6.QtCore import Signal, QThreadPool
 
 from factories import TrieSplitMethodFactory, FileGrouperFactory
 from hashed_file import HashedFile
@@ -13,23 +14,28 @@ from thread_safe_dict import ThreadSafeDict
 from trie import Trie
 
 
-class DuplicatesFinder(QObject, InterruptibleClass):
+class DuplicatesFinder(InterruptibleClass):
     search_done = Signal(dict)
     file_scanned = Signal()
 
     def __init__(self):
-        QObject.__init__(self)
+        # QObject.__init__(self)
         InterruptibleClass.__init__(self, parent=self)
         self.__factory = TrieSplitMethodFactory()
         self.__duplicates = ThreadSafeDict()
         self.__thread_pool = QThreadPool()
 
     def find_duplicates(self, files_to_scan, search_type: SearchTypes):
+        logging.info("DuplicatesFinder started")
         self.__duplicates.clear()
         groupped_files = self.__group_files(files_to_scan, search_type)
-        for files in groupped_files.values():
-            self._add_task(self.__find_group_duplicates, files, search_type)
-        self._wait_for_tasks_completion()
+        if not groupped_files:
+            logging.info("No files to group")
+        else:
+            for files in groupped_files.values():
+                self._add_task(self.__find_group_duplicates, files, search_type)
+            self._wait_for_tasks_completion()
+            logging.info("All files scanned")
         self.search_done.emit(self.__duplicates.dict)
 
     def __group_files(self, files, search_type: SearchTypes):
@@ -57,7 +63,7 @@ class DuplicatesFinder(QObject, InterruptibleClass):
                         trie.add_file(hfile)
             except Exception as e:
                 traceback.print_exc(limit=None, file=None, chain=True)
-                print(e)
+                logging.error(f"Error processing file: {path}, Error: {e}")
         for duplicates in trie.find_duplicates():
             if self.need_to_interrupt():
                 return
