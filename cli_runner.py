@@ -22,13 +22,13 @@ class CLIRunner(QObject):
             self.searcher.search_done.connect(lambda: self.finished.emit())
 
     def print_output(self, result):
-        output = "\n\nDUPLICATES:\n"
+        output = ["\n\nDUPLICATES:\n"]
         for key, value in result.items():
-            output += f"{key}"
+            output.append(f"\n{key}")
             for v in value:
-                output += f"\t{v}"
-        output += "\n\n"
-        logging.info(output)
+                output.append(f"\n\t{v}")
+        output.append("\n\n")
+        logging.info(''.join(output))
 
     def run(self, include_directories, exclude_directories, include_masks, exclude_masks, depth, min_file_size,
             search_type):
