@@ -12,6 +12,10 @@ from version import APP_VERSION, BUILD_NUMBER
 
 
 def main():
+    try:
+        os.chdir(sys._MEIPASS)
+    except AttributeError:
+        pass
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", "--version", action="store_true", help="Print the application version and exit")
     parser.add_argument("--loglevel", choices=["debug", "info", "warning", "error", "critical"], default="info",
