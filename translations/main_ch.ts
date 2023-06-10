@@ -1,58 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en_US" sourcelanguage="en_US">
+<TS version="2.1" language="zh_CN">
 <context>
     <name>DuplicateFinder</name>
     <message>
         <location filename="../ui/mainwindow.ui" line="17"/>
         <source>Duplicate Finder</source>
-        <translation>Duplicate Finder</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.ui" line="1322"/>
-        <source>SEARCH</source>
-        <translation>SEARCH</translation>
+        <translation>重复查找器</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1284"/>
         <source>Adding Files: %p%</source>
-        <translation>Adding Files: %p%</translation>
+        <translation>添加文件: %p%</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.ui" line="1300"/>
+        <source>CANCEL</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.ui" line="1322"/>
+        <source>SEARCH</source>
+        <translation>搜索</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1357"/>
         <source>Directories</source>
-        <translation>Directories</translation>
+        <translation>目录</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.ui" line="1381"/>
+        <source>Included Directories</source>
+        <translation>包含目录</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1390"/>
         <location filename="../ui/mainwindow.ui" line="1421"/>
         <source>Choose...</source>
-        <translation>Choose...</translation>
+        <translation>选择...</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.ui" line="1412"/>
+        <source>Excluded Directories</source>
+        <translation>排除的目录</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1451"/>
         <source>Search Type</source>
-        <translation>Search Type</translation>
+        <translation>搜索类型</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1457"/>
         <source>Hash</source>
-        <translation>Hash</translation>
+        <translation>散列</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1470"/>
         <source>Name</source>
-        <translation>Name</translation>
+        <translation>姓名</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1501"/>
         <source>Parameters</source>
-        <translation>Parameters</translation>
+        <translation>参数</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1513"/>
         <source>Min File Size</source>
-        <translation>Min File Size</translation>
+        <translation>最小文件大小</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1563"/>
@@ -77,137 +92,122 @@
     <message>
         <location filename="../ui/mainwindow.ui" line="1594"/>
         <source>Search Depth</source>
-        <translation>Search Depth</translation>
+        <translation>搜索深度</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1641"/>
         <source>Masks</source>
-        <translation>Masks</translation>
+        <translation>面具</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.ui" line="1647"/>
+        <source>Excluded Masks</source>
+        <translation>排除的面具</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1659"/>
         <location filename="../ui/mainwindow.ui" line="1700"/>
         <source>Enter python-style mask here...</source>
-        <translation>Enter python-style mask here...</translation>
+        <translation>在此处输入 Python 样式的掩码...</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1669"/>
         <location filename="../ui/mainwindow.ui" line="1710"/>
         <source>Add</source>
-        <translation>Add</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.ui" line="1381"/>
-        <source>Included Directories</source>
-        <translation>Included Directories</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.ui" line="1300"/>
-        <source>CANCEL</source>
-        <translation>CANCEL</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.ui" line="1412"/>
-        <source>Excluded Directories</source>
-        <translation>Excluded Directories</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.ui" line="1647"/>
-        <source>Excluded Masks</source>
-        <translation>Excluded Masks</translation>
+        <translation>添加</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1688"/>
         <source>Included Masks</source>
-        <translation>Included Masks</translation>
+        <translation>包括口罩</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1724"/>
         <source>Results</source>
-        <translation>Results</translation>
+        <translation>结果</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1749"/>
         <source>Remove Selected</source>
-        <translation>Remove Selected</translation>
+        <translation>删除选定</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1773"/>
         <source>Path</source>
-        <translation>Path</translation>
+        <translation>小路</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1795"/>
         <source>Settings</source>
-        <translation>Settings</translation>
+        <translation>设置</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1799"/>
         <source>Theme</source>
-        <translation>Theme</translation>
+        <translation>主题</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1806"/>
         <source>Language</source>
-        <translation>Language</translation>
+        <translation>语言</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1825"/>
         <location filename="../ui/mainwindow.ui" line="1905"/>
         <source>Russian</source>
-        <translation>Russian</translation>
+        <translation>俄语</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1830"/>
         <location filename="../ui/mainwindow.ui" line="1880"/>
         <source>English</source>
-        <translation>English</translation>
+        <translation>英语</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1835"/>
         <source>Dark</source>
-        <translation>Dark</translation>
+        <translation>黑暗的</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1840"/>
         <source>Light</source>
-        <translation>Light</translation>
+        <translation>光</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1845"/>
         <location filename="../ui/mainwindow.ui" line="1890"/>
         <source>German</source>
-        <translation>German</translation>
+        <translation>德语</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1850"/>
         <location filename="../ui/mainwindow.ui" line="1860"/>
         <location filename="../ui/mainwindow.ui" line="1885"/>
         <source>French</source>
-        <translation>French</translation>
+        <translation>法语</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1855"/>
         <location filename="../ui/mainwindow.ui" line="1910"/>
         <source>Spanish</source>
-        <translation>Spanish</translation>
+        <translation>西班牙语</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1865"/>
         <location filename="../ui/mainwindow.ui" line="1875"/>
         <source>Chinese</source>
-        <translation>Chinese</translation>
+        <translation>中国人</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1870"/>
         <location filename="../ui/mainwindow.ui" line="1900"/>
         <source>Japanese</source>
-        <translation>Japanese</translation>
+        <translation>日本人</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1895"/>
         <source>Italian</source>
-        <translation>Italian</translation>
+        <translation>意大利语</translation>
     </message>
 </context>
 <context>
@@ -216,33 +216,33 @@
         <location filename="../ui/mainwindow.py" line="86"/>
         <location filename="../ui/mainwindow.py" line="133"/>
         <source>Version</source>
-        <translation>Version</translation>
+        <translation>版本</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.py" line="86"/>
         <location filename="../ui/mainwindow.py" line="133"/>
         <source>Build</source>
-        <translation>Build</translation>
+        <translation>建造</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.py" line="142"/>
         <source>Searching duplicates: %p%</source>
-        <translation>Searching duplicates: %p%</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.py" line="169"/>
-        <source>Search complete</source>
-        <translation>Search complete</translation>
+        <translation>搜索重复项: %p%</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.py" line="145"/>
         <source>Removing complete</source>
-        <translation>Removing complete</translation>
+        <translation>删除完成</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.py" line="169"/>
+        <source>Search complete</source>
+        <translation>搜索完成</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.py" line="242"/>
         <source>Removing files: %p%</source>
-        <translation>Removing files: %p%</translation>
+        <translation>删除文件: %p%</translation>
     </message>
 </context>
 </TS>

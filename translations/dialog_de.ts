@@ -9,17 +9,17 @@
         <translation>Bestätigung</translation>
     </message>
     <message>
-        <location filename="../ui/confirmation_dialog.ui" line="1193"/>
+        <location filename="../ui/confirmation_dialog.ui" line="47"/>
         <source>Move selected files to thrash?</source>
-        <translation>Ausgewählte Dateien in den Thrash verschieben?</translation>
+        <translation>Verschieben Sie die ausgewählte Datei in den Papierkorb?</translation>
     </message>
     <message>
-        <location filename="../ui/confirmation_dialog.ui" line="1297"/>
+        <location filename="../ui/confirmation_dialog.ui" line="57"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../ui/confirmation_dialog.ui" line="1304"/>
+        <location filename="../ui/confirmation_dialog.ui" line="64"/>
         <source>Cancel</source>
         <translation>Stornieren</translation>
     </message>

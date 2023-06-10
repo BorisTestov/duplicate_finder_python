@@ -1,58 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en_US" sourcelanguage="en_US">
+<TS version="2.1" language="ja_JP">
 <context>
     <name>DuplicateFinder</name>
     <message>
         <location filename="../ui/mainwindow.ui" line="17"/>
         <source>Duplicate Finder</source>
-        <translation>Duplicate Finder</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.ui" line="1322"/>
-        <source>SEARCH</source>
-        <translation>SEARCH</translation>
+        <translation>重複ファインダー</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1284"/>
         <source>Adding Files: %p%</source>
-        <translation>Adding Files: %p%</translation>
+        <translation>ファイルの追加: %p%</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.ui" line="1300"/>
+        <source>CANCEL</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.ui" line="1322"/>
+        <source>SEARCH</source>
+        <translation>検索</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1357"/>
         <source>Directories</source>
-        <translation>Directories</translation>
+        <translation>ディレクトリ</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.ui" line="1381"/>
+        <source>Included Directories</source>
+        <translation>含まれるディレクトリ</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1390"/>
         <location filename="../ui/mainwindow.ui" line="1421"/>
         <source>Choose...</source>
-        <translation>Choose...</translation>
+        <translation>選ぶ...</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.ui" line="1412"/>
+        <source>Excluded Directories</source>
+        <translation>除外されたディレクトリ</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1451"/>
         <source>Search Type</source>
-        <translation>Search Type</translation>
+        <translation>検索タイプ</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1457"/>
         <source>Hash</source>
-        <translation>Hash</translation>
+        <translation>ハッシュ</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1470"/>
         <source>Name</source>
-        <translation>Name</translation>
+        <translation>名前</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1501"/>
         <source>Parameters</source>
-        <translation>Parameters</translation>
+        <translation>パラメーター</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1513"/>
         <source>Min File Size</source>
-        <translation>Min File Size</translation>
+        <translation>最小サイズ</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1563"/>
@@ -77,137 +92,122 @@
     <message>
         <location filename="../ui/mainwindow.ui" line="1594"/>
         <source>Search Depth</source>
-        <translation>Search Depth</translation>
+        <translation>検索の深さ</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1641"/>
         <source>Masks</source>
-        <translation>Masks</translation>
+        <translation>マスク</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.ui" line="1647"/>
+        <source>Excluded Masks</source>
+        <translation>除外されたマスク</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1659"/>
         <location filename="../ui/mainwindow.ui" line="1700"/>
         <source>Enter python-style mask here...</source>
-        <translation>Enter python-style mask here...</translation>
+        <translation>ここに Python スタイルのマスクを入力してください...</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1669"/>
         <location filename="../ui/mainwindow.ui" line="1710"/>
         <source>Add</source>
-        <translation>Add</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.ui" line="1381"/>
-        <source>Included Directories</source>
-        <translation>Included Directories</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.ui" line="1300"/>
-        <source>CANCEL</source>
-        <translation>CANCEL</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.ui" line="1412"/>
-        <source>Excluded Directories</source>
-        <translation>Excluded Directories</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.ui" line="1647"/>
-        <source>Excluded Masks</source>
-        <translation>Excluded Masks</translation>
+        <translation>追加</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1688"/>
         <source>Included Masks</source>
-        <translation>Included Masks</translation>
+        <translation>付属のマスク</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1724"/>
         <source>Results</source>
-        <translation>Results</translation>
+        <translation>結果</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1749"/>
         <source>Remove Selected</source>
-        <translation>Remove Selected</translation>
+        <translation>削除選択</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1773"/>
         <source>Path</source>
-        <translation>Path</translation>
+        <translation>道</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1795"/>
         <source>Settings</source>
-        <translation>Settings</translation>
+        <translation>設定</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1799"/>
         <source>Theme</source>
-        <translation>Theme</translation>
+        <translation>テーマ</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1806"/>
         <source>Language</source>
-        <translation>Language</translation>
+        <translation>言語</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1825"/>
         <location filename="../ui/mainwindow.ui" line="1905"/>
         <source>Russian</source>
-        <translation>Russian</translation>
+        <translation>ロシア語</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1830"/>
         <location filename="../ui/mainwindow.ui" line="1880"/>
         <source>English</source>
-        <translation>English</translation>
+        <translation>英語</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1835"/>
         <source>Dark</source>
-        <translation>Dark</translation>
+        <translation>暗い</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1840"/>
         <source>Light</source>
-        <translation>Light</translation>
+        <translation>光</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1845"/>
         <location filename="../ui/mainwindow.ui" line="1890"/>
         <source>German</source>
-        <translation>German</translation>
+        <translation>ドイツ語</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1850"/>
         <location filename="../ui/mainwindow.ui" line="1860"/>
         <location filename="../ui/mainwindow.ui" line="1885"/>
         <source>French</source>
-        <translation>French</translation>
+        <translation>フランス語</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1855"/>
         <location filename="../ui/mainwindow.ui" line="1910"/>
         <source>Spanish</source>
-        <translation>Spanish</translation>
+        <translation>スペイン語</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1865"/>
         <location filename="../ui/mainwindow.ui" line="1875"/>
         <source>Chinese</source>
-        <translation>Chinese</translation>
+        <translation>中国語</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1870"/>
         <location filename="../ui/mainwindow.ui" line="1900"/>
         <source>Japanese</source>
-        <translation>Japanese</translation>
+        <translation>日本語</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="1895"/>
         <source>Italian</source>
-        <translation>Italian</translation>
+        <translation>イタリア語</translation>
     </message>
 </context>
 <context>
@@ -216,33 +216,33 @@
         <location filename="../ui/mainwindow.py" line="86"/>
         <location filename="../ui/mainwindow.py" line="133"/>
         <source>Version</source>
-        <translation>Version</translation>
+        <translation>バージョン</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.py" line="86"/>
         <location filename="../ui/mainwindow.py" line="133"/>
         <source>Build</source>
-        <translation>Build</translation>
+        <translation>建てる</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.py" line="142"/>
         <source>Searching duplicates: %p%</source>
-        <translation>Searching duplicates: %p%</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.py" line="169"/>
-        <source>Search complete</source>
-        <translation>Search complete</translation>
+        <translation>重複の検索: %p%</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.py" line="145"/>
         <source>Removing complete</source>
-        <translation>Removing complete</translation>
+        <translation>削除完了</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.py" line="169"/>
+        <source>Search complete</source>
+        <translation>検索完了</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.py" line="242"/>
         <source>Removing files: %p%</source>
-        <translation>Removing files: %p%</translation>
+        <translation>ファイルの削除: %p%</translation>
     </message>
 </context>
 </TS>
