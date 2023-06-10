@@ -31,29 +31,9 @@ jobs:
 
       - name: Update version
         id: update_version
-        run: |
-          python3 - <<EOF
-          import os
-          import re
-          
-          version = '${{ github.ref }}'
-          print(version)
-          version = version.replace('refs/tags/', '')
-          version_parts = re.findall(r'\d+', version)
-          major = version_parts[0]
-          minor = version_parts[1]
-          patch_with_suffix = version_parts[2]
-          patch = patch_with_suffix.split('_')[0]
-          build_number = os.getenv('BUILD_NUMBER')
-          
-          with open('version.py', 'w') as f:
-              f.write(f'APP_VERSION = "{major}.{minor}.{patch}"\n')
-              f.write(f'BUILD_NUMBER = "{build_number}"\n')
-          
-          with open('version.py', 'r') as f:
-              print(f.read())
-          EOF
-
+        run: python update_version.py
+        env:
+          BUILD_NUMBER: ${{ github.run_number }}
 
       - name: Install dependencies
         run: |
