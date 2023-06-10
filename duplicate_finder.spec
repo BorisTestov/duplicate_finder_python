@@ -1,4 +1,8 @@
 # -*- mode: python ; coding: utf-8 -*-
+from PyInstaller.utils.hooks import collect_data_files
+
+datas = [('translations/*.qm', 'translations'), ('themes/*.qss', 'themes')]
+datas += collect_data_files('pyshadow')
 
 
 block_cipher = None
@@ -8,7 +12,7 @@ a = Analysis(
     ['main.py'],
     pathex=[],
     binaries=[],
-    datas=[('translations/*.qm', 'translations'), ('themes/*.qss', 'themes')],
+    datas=datas,
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

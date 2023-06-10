@@ -50,18 +50,23 @@ def parse_arguments():
         parser.add_argument('--remove-after-find', action='store_true', default=False,
                             help='Removes the file after it is found')
 
-    args = None
-    try:
-        args = parser.parse_args()
-        if hasattr(args, 'include_directories') and args.include_directories is not None:
-            if not args.include_directories:
-                parser.error("--include-directories requires at least one directory.")
-    except (argparse.ArgumentError, argparse.ArgumentTypeError) as e:
-        print(str(e), file=sys.stderr)
-        parser.print_help(sys.stderr)
-        sys.exit(1)
+    # args = None
+    # try:
+    #     args = parser.parse_args()
+    #     if hasattr(args, 'include_directories') and args.include_directories is not None:
+    #         if not args.include_directories:
+    #             parser.error("--include-directories requires at least one directory.")
+    #     return args  # Return args here
+    # except (argparse.ArgumentError, argparse.ArgumentTypeError) as e:
+    #     print(str(e))
+    #     parser.print_help()
+    #     sys.exit(1)
+    # except Exception as e:
+    #     print(str(e))
+    #     parser.print_help()
+    #     sys.exit(1)
 
-    return args
+    return parser.parse_args()
 
 
 def handle_gui_run():
@@ -121,12 +126,13 @@ def handle_cli_run(args):
 
 def main():
     signal.signal(signal.SIGINT, signal.SIG_DFL)
+    # print(sys.stdout)
+    # print(sys.__stdout__)
 
-    try:
+    if hasattr(sys, '_MEIPASS'):
         os.chdir(sys._MEIPASS)
-    except AttributeError:
-        pass
     args = parse_arguments()
+    # print(args.cli)
     if args.version:
         print(f"Version: {APP_VERSION}")
         print(f"Build: {BUILD_NUMBER}")
@@ -166,10 +172,10 @@ def main():
     logging.info(f"version: {APP_VERSION} build: {BUILD_NUMBER}")
 
     if not args.cli:
-        print('Running with GUI option')
+        logging.info('Running with GUI option')
         handle_gui_run()
     else:
-        print('Running with CLI option')
+        logging.info('Running with CLI option')
         handle_cli_run(args)
 
 
