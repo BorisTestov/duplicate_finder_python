@@ -56,5 +56,5 @@ class InterruptibleTask(QRunnable, QObject):
             timer.stop()
             timer.deleteLater()
             self.finished.emit()
-
+            
             event_loop.exit()

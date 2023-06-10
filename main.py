@@ -25,7 +25,6 @@ def parse_arguments():
     parser.add_argument("--loglevel", choices=["debug", "info", "warning", "error", "critical"], default="info",
                         help="Set the logging level (default: info)")
 
-    # Add the include-directories argument conditionally based on the cli flag
     if '--cli' in sys.argv:
         parser.add_argument('--include-directories', nargs='+', required=True,
                             help='Array of directories to include')
@@ -54,7 +53,6 @@ def parse_arguments():
     args = None
     try:
         args = parser.parse_args()
-        # Validate the include-directories argument if it is present
         if hasattr(args, 'include_directories') and args.include_directories is not None:
             if not args.include_directories:
                 parser.error("--include-directories requires at least one directory.")
@@ -145,27 +143,20 @@ def main():
 
     os.makedirs(log_dir, exist_ok=True)
 
-    # Generate a unique log file name based on the current timestamp
-    # Generate a log file name
     log_file = os.path.join(log_dir, "application.log")
 
-    # If the log file already exists, rotate it
     if os.path.isfile(log_file):
-        # Find the next available log file number
         rotate_number = 1
         while os.path.isfile(f"{log_file}.{rotate_number}"):
             rotate_number += 1
 
-        # If we've reached the maximum number of backups, delete the oldest one
-        if rotate_number > 5:  # backupCount is 5
+        if rotate_number > 5:
             os.remove(f"{log_file}.{rotate_number - 1}")
             rotate_number -= 1
 
-        # Shift all existing backup log files by one
         for i in range(rotate_number, 0, -1):
             os.rename(f"{log_file}.{i - 1 if i > 1 else ''}", f"{log_file}.{i}")
 
-    # Create the log file
     rotating_handler = logging.handlers.RotatingFileHandler(log_file, maxBytes=1024 * 1024, backupCount=5)
     rotating_handler.setLevel(logging.DEBUG)
     formatter = logging.Formatter('[%(asctime)s %(threadName)s] %(levelname)s: %(message)s')
