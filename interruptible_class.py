@@ -20,7 +20,8 @@ class InterruptibleClass(QObject):
         self.__thread_pool = QThreadPool()
 
     def interrupt(self):
-        logging.warning(f"Interrupting class {self}")
+        if len(self.__list_of_workers):
+            logging.warning(f"Interrupting class {self}")
         self.__interrupt_event.set()
         self.interrupted.emit()
 

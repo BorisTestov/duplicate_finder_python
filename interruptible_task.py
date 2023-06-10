@@ -20,9 +20,6 @@ class InterruptibleTask(QRunnable, QObject):
         self.fn = fn
         self.args = args
         self.kwargs = kwargs
-        # self.timer = QTimer(self)
-        # self.timer.setInterval(1000)
-        # self.timer.timeout.connect(self.check_interrupt)
         self.isInterruptionRequested = False
 
     def interrupt(self):
@@ -41,6 +38,7 @@ class InterruptibleTask(QRunnable, QObject):
         timer.timeout.connect(check_interrupt)
         timer.start()
         self.started.emit()
+
         try:
             result = self.fn(*self.args, **self.kwargs)
             self.result.emit(result)
@@ -58,4 +56,5 @@ class InterruptibleTask(QRunnable, QObject):
             timer.stop()
             timer.deleteLater()
             self.finished.emit()
+
             event_loop.exit()

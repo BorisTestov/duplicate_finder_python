@@ -2,51 +2,71 @@ import argparse
 import logging
 import logging.handlers
 import os
+import signal
 import sys
 
-from PySide6.QtCore import QTranslator, QLocale, QSettings
+from PySide6.QtCore import QTranslator, QLocale, QSettings, QCoreApplication
 from PySide6.QtWidgets import QApplication
 
+from cli_runner import CLIRunner
 from ui.mainwindow import MainWindow
+from ui.mappings import Mappings
 from version import APP_VERSION, BUILD_NUMBER
 
 
-def main():
-    try:
-        os.chdir(sys._MEIPASS)
-    except AttributeError:
-        pass
-    parser = argparse.ArgumentParser()
+def parse_arguments():
+    parser = argparse.ArgumentParser(description='Directory Scanner')
+
+    parser.add_argument('--cli', action='store_true',
+                        help='Indicates that the app will run from console')
+
     parser.add_argument("-v", "--version", action="store_true", help="Print the application version and exit")
+
     parser.add_argument("--loglevel", choices=["debug", "info", "warning", "error", "critical"], default="info",
                         help="Set the logging level (default: info)")
-    args = parser.parse_args()
 
-    print(f"Version: {APP_VERSION} Build: {BUILD_NUMBER}")
-    if args.version:
-        print(f"Version: {APP_VERSION}")
-        print(f"Build: {BUILD_NUMBER}")
-        return
+    # Add the include-directories argument conditionally based on the cli flag
+    if '--cli' in sys.argv:
+        parser.add_argument('--include-directories', nargs='+', required=True,
+                            help='Array of directories to include')
 
-    if sys.platform == "win32":
-        default_log_dir = os.getenv("APPDATA")
-        log_dir = os.path.join(default_log_dir, "DuplicateFinder", "logs")
-    else:
-        default_log_dir = os.path.expanduser("~")
-        log_dir = os.path.join(default_log_dir, ".DuplicateFinder", "logs")
+        parser.add_argument('--exclude-directories', nargs='+', default=[],
+                            help='Array of directories to exclude')
 
-    print(f"Logs stored in {log_dir}")
-    os.makedirs(log_dir, exist_ok=True)
-    log_file = os.path.join(log_dir, "application.log")
-    logging.basicConfig(level=args.loglevel.upper(),
-                        format="[%(asctime)s %(threadName)s] %(levelname)s: %(message)s",
-                        handlers=[
-                            logging.handlers.RotatingFileHandler(log_file, maxBytes=1024 * 1024, backupCount=5),
-                            logging.StreamHandler(sys.stdout)
-                        ])
+        parser.add_argument('--include-masks', nargs='+', default=[],
+                            help='Array of masks to include')
 
-    logging.info(f"version: {APP_VERSION} build: {BUILD_NUMBER}")
+        parser.add_argument('--exclude-masks', nargs='+', default=[],
+                            help='Array of masks to exclude')
 
+        parser.add_argument('--min-file-size-bytes', type=int, default=0,
+                            help='Minimum file size in bytes')
+
+        parser.add_argument('--depth', type=int, default=0,
+                            help='Depth of directory scanning')
+
+        parser.add_argument('--search-type', type=str, default='hash',
+                            help='Type of search to perform')
+
+        parser.add_argument('--remove-after-find', action='store_true', default=False,
+                            help='Removes the file after it is found')
+
+    args = None
+    try:
+        args = parser.parse_args()
+        # Validate the include-directories argument if it is present
+        if hasattr(args, 'include_directories') and args.include_directories is not None:
+            if not args.include_directories:
+                parser.error("--include-directories requires at least one directory.")
+    except (argparse.ArgumentError, argparse.ArgumentTypeError) as e:
+        print(str(e), file=sys.stderr)
+        parser.print_help(sys.stderr)
+        sys.exit(1)
+
+    return args
+
+
+def handle_gui_run():
     app = QApplication(sys.argv)
     settings = QSettings("BTestov", "DuplicateFinder")
     locale = settings.value("locale", QLocale.system().name())
@@ -79,6 +99,87 @@ def main():
     window.languageChanged.connect(update_locale)
     window.show()
     sys.exit(app.exec())
+
+
+def handle_cli_run(args):
+    app = QCoreApplication(sys.argv)
+
+    runner = CLIRunner(args.remove_after_find)
+    app.aboutToQuit.connect(runner.searcher.abort)
+    runner.finished.connect(app.quit)
+
+    runner.run(
+        args.include_directories,
+        args.exclude_directories,
+        args.include_masks,
+        args.exclude_masks,
+        args.depth,
+        args.min_file_size_bytes,
+        Mappings.type_mappings[args.search_type]
+    )
+    app.exec()
+    sys.exit(0)
+
+
+def main():
+    signal.signal(signal.SIGINT, signal.SIG_DFL)
+
+    try:
+        os.chdir(sys._MEIPASS)
+    except AttributeError:
+        pass
+    args = parse_arguments()
+    if args.version:
+        print(f"Version: {APP_VERSION}")
+        print(f"Build: {BUILD_NUMBER}")
+        return
+
+    if sys.platform == "win32":
+        default_log_dir = os.getenv("APPDATA")
+        log_dir = os.path.join(default_log_dir, "DuplicateFinder", "logs")
+    else:
+        default_log_dir = os.path.expanduser("~")
+        log_dir = os.path.join(default_log_dir, ".DuplicateFinder", "logs")
+
+    print(f"Logs stored in {log_dir}")
+
+    os.makedirs(log_dir, exist_ok=True)
+
+    # Generate a unique log file name based on the current timestamp
+    # Generate a log file name
+    log_file = os.path.join(log_dir, "application.log")
+
+    # If the log file already exists, rotate it
+    if os.path.isfile(log_file):
+        # Find the next available log file number
+        rotate_number = 1
+        while os.path.isfile(f"{log_file}.{rotate_number}"):
+            rotate_number += 1
+
+        # If we've reached the maximum number of backups, delete the oldest one
+        if rotate_number > 5:  # backupCount is 5
+            os.remove(f"{log_file}.{rotate_number - 1}")
+            rotate_number -= 1
+
+        # Shift all existing backup log files by one
+        for i in range(rotate_number, 0, -1):
+            os.rename(f"{log_file}.{i - 1 if i > 1 else ''}", f"{log_file}.{i}")
+
+    # Create the log file
+    rotating_handler = logging.handlers.RotatingFileHandler(log_file, maxBytes=1024 * 1024, backupCount=5)
+    rotating_handler.setLevel(logging.DEBUG)
+    formatter = logging.Formatter('[%(asctime)s %(threadName)s] %(levelname)s: %(message)s')
+    rotating_handler.setFormatter(formatter)
+    logging.basicConfig(level=args.loglevel.upper(), handlers=[rotating_handler, logging.StreamHandler(sys.stdout)])
+
+    logging.info(f"version: {APP_VERSION} build: {BUILD_NUMBER}")
+
+    if not args.cli:
+        print('Running with GUI option')
+        handle_gui_run()
+    else:
+        print('Running with CLI option')
+        handle_cli_run(args)
 
 
 if __name__ == "__main__":
