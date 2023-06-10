@@ -50,23 +50,19 @@ def parse_arguments():
         parser.add_argument('--remove-after-find', action='store_true', default=False,
                             help='Removes the file after it is found')
 
-    # args = None
-    # try:
-    #     args = parser.parse_args()
-    #     if hasattr(args, 'include_directories') and args.include_directories is not None:
-    #         if not args.include_directories:
-    #             parser.error("--include-directories requires at least one directory.")
-    #     return args  # Return args here
-    # except (argparse.ArgumentError, argparse.ArgumentTypeError) as e:
-    #     print(str(e))
-    #     parser.print_help()
-    #     sys.exit(1)
-    # except Exception as e:
-    #     print(str(e))
-    #     parser.print_help()
-    #     sys.exit(1)
-
-    return parser.parse_args()
+    try:
+        args = parser.parse_args()
+        if hasattr(args, 'include_directories') and args.include_directories is not None:
+            if not args.include_directories:
+                parser.error("--include-directories requires at least one directory.")
+        return args
+    except (argparse.ArgumentError, argparse.ArgumentTypeError) as e:
+        print(str(e), file=sys.stderr)
+        parser.print_help(sys.stderr)
+    except Exception as e:
+        print(str(e), file=sys.stderr)
+        parser.print_help(sys.stderr)
+    sys.exit(1)
 
 
 def handle_gui_run():
